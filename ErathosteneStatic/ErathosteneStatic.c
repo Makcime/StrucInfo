@@ -1,4 +1,4 @@
-/*
+	/*
  ============================================================================
  Name        :
  Author      :
@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "inout.h"
+#include "../InOut/src/inout.h"
 
 typedef short int bool;
 #define false 0
@@ -23,6 +23,11 @@ struct TListePrem {
 	int pPrem[78498];
 	int nbrPrem;
 };
+
+void InitialiserTListePrem(struct TListePrem* l);
+void Erathostene(struct TListePrem* l);
+void AfficherPremiers(struct TListePrem* l);
+void DetruireTListePrem(struct TListePrem* l);
 
 /* TODO ... */
 
@@ -37,5 +42,22 @@ int main(int argc, char* argv[]) {
 	} while (!Stop());
 	return EXIT_SUCCESS;
 }
+
+void InitialiserTListePrem(struct TListePrem* l){
+
+}
+
+void Erathostene(struct TListePrem* l){
+
+}
+
+void AfficherPremiers(struct TListePrem* l){
+
+}
+
+void DetruireTListePrem(struct TListePrem* l){
+
+}
+
 
 /* TODO ... */
