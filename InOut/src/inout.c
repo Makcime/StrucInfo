@@ -19,7 +19,7 @@ long ReadLongLimited(const char* message, long min, long max) {
 	char *pLastChar;
 	char *p;
 	do {
-		printf(message);
+		printf("%s", message);
 		p = fgets(buffer, 22, stdin);
 		l = strtol(buffer, &pLastChar, 10);
 	} while (p == 0 || *pLastChar != '\n' || l < min || l > max);
@@ -44,7 +44,7 @@ double ReadDoubleLimited(const char* message, double min, double max) {
 	char *pLastChar;
 	char *p;
 	do {
-		printf(message);
+		printf("%s", message);
 		p = fgets(buffer, 22, stdin);
 		d = strtod(buffer, &pLastChar);
 	} while (p == 0 || *pLastChar != '\n' || d < min || d > max);
