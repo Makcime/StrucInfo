@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include "../InOut/src/inout.h"
 
 typedef short int bool;
@@ -31,6 +32,7 @@ void AfficherPremiers(struct TListePrem* l);
 void DetruireTListePrem(struct TListePrem* l);
 
 int main(int argc, char* argv[]) {
+
 	struct TListePrem listePrem;
 	do {
 		InitialiserTListePrem(&listePrem);
@@ -50,7 +52,7 @@ void InitialiserTListePrem(struct TListePrem* l){
 
 void Erathostene(struct TListePrem* l){
 	bool bools[MAX]; 
-	int i, nb = 2;
+	int i, nb, k;
 	double racine;
 
 	for (i = 0; i < MAX; ++i)
@@ -60,11 +62,13 @@ void Erathostene(struct TListePrem* l){
 	bools[1] = false;
 
 	racine = sqrt(l->nbrMax);
-
-	for ( nb = 2; nb < racine; nb++)
-		for (i = nb; i <= l->nbrMax/nb; i++)
+	
+	for ( nb = 2; nb < racine; nb++){
+		k = l->nbrMax/nb;
+		for (i = nb; i <= k; i++)
 			bools[i*nb] = false;
-
+	}
+	
 	for (i = 0; i < l->nbrMax; ++i)
 		if(bools[i] == true)
 			l->pPrem[l->nbrPrem++] = i;
