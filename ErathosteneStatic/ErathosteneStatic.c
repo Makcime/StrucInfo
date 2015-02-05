@@ -2,9 +2,9 @@
  ============================================================================
  Name        : ErathosteneStatic.c
  Author      : Marlier M.
- Version     : 
- Copyright   : 
- Description : 
+ Version     :
+ Copyright   :
+ Description :
  ============================================================================
  */
 
@@ -26,17 +26,19 @@ struct TListePrem {
 	int nbrPrem;
 };
 
-void InitialiserTListePrem(struct TListePrem* l);
-void Erathostene(struct TListePrem* l);
-void AfficherPremiers(struct TListePrem* l);
-void DetruireTListePrem(struct TListePrem* l);
+void InitialiserTListePrem(struct TListePrem *l);
+void Erathostene(struct TListePrem *l);
+void AfficherPremiers(struct TListePrem *l);
+void DetruireTListePrem(struct TListePrem *l);
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
 
 	struct TListePrem listePrem;
 	do {
 		InitialiserTListePrem(&listePrem);
-		listePrem.nbrMax = ReadIntLimited("\nVotre naturel maximum ? ", 0, MAX);
+		listePrem.nbrMax =
+		    ReadIntLimited("\nVotre naturel maximum ? ", 0, MAX);
 		Erathostene(&listePrem);
 		AfficherPremiers(&listePrem);
 		DetruireTListePrem(&listePrem);
@@ -44,14 +46,16 @@ int main(int argc, char* argv[]) {
 	return EXIT_SUCCESS;
 }
 
-void InitialiserTListePrem(struct TListePrem* l){
+void InitialiserTListePrem(struct TListePrem *l)
+{
 	l->nbrMax = MAX;
 	l->pPrem[0] = 0;
-	l->nbrPrem=0;
+	l->nbrPrem = 0;
 }
 
-void Erathostene(struct TListePrem* l){
-	bool bools[MAX+1]; 
+void Erathostene(struct TListePrem *l)
+{
+	bool bools[MAX + 1];
 	int i, nb, k;
 	double racine;
 
@@ -62,26 +66,28 @@ void Erathostene(struct TListePrem* l){
 	bools[1] = false;
 
 	racine = sqrt(l->nbrMax);
-	
-	for ( nb = 2; nb < racine; nb++){
-		k = l->nbrMax/nb;
+
+	for (nb = 2; nb < racine; nb++) {
+		k = l->nbrMax / nb;
 		for (i = nb; i <= k; i++)
-			bools[i*nb] = false;
+			bools[i * nb] = false;
 	}
-	
+
 	for (i = 0; i < l->nbrMax; ++i)
-		if(bools[i] == true)
+		if (bools[i] == true)
 			l->pPrem[l->nbrPrem++] = i;
 }
 
-void AfficherPremiers(struct TListePrem* l){
+void AfficherPremiers(struct TListePrem *l)
+{
 	int i;
 	for (i = 0; i < l->nbrPrem; ++i)
 		printf("%d;", l->pPrem[i]);
 	printf("\n");
 }
 
-void DetruireTListePrem(struct TListePrem* l){
+void DetruireTListePrem(struct TListePrem *l)
+{
 	int i;
 	for (i = 0; i < PPREM_SIZE; ++i)
 		l->pPrem[i] = 0;
