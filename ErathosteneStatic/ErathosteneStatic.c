@@ -51,7 +51,7 @@ void InitialiserTListePrem(struct TListePrem* l){
 }
 
 void Erathostene(struct TListePrem* l){
-	bool bools[MAX]; 
+	bool bools[MAX+1]; 
 	int i, nb, k;
 	double racine;
 
