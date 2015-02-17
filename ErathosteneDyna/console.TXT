@@ -1,0 +1,31 @@
+﻿
+Votre naturel maximum ? 2147483647
+Duree calculs : 38.24
+
+Il y a 105097565 nombre premiers inferieurs a 2147483647
+Nombre premier n      1 :          2
+Nombre premier n      2 :          3
+Nombre premier n      3 :          5
+Nombre premier n      4 :          7
+Nombre premier n      5 :         11
+Nombre premier n      6 :         13
+Nombre premier n      7 :         17
+Nombre premier n      8 :         19
+Nombre premier n      9 :         23
+Nombre premier n     10 :         29
+
+...
+
+Nombre premier n 105097556 : 2147483477
+Nombre premier n 105097557 : 2147483489
+Nombre premier n 105097558 : 2147483497
+Nombre premier n 105097559 : 2147483543
+Nombre premier n 105097560 : 2147483549
+Nombre premier n 105097561 : 2147483563
+Nombre premier n 105097562 : 2147483579
+Nombre premier n 105097563 : 2147483587
+Nombre premier n 105097564 : 2147483629
+Nombre premier n 105097565 : 2147483647
+Voulez-vous arr+¬ter (<O>ui/<N>on) ?
+
+
