@@ -61,21 +61,16 @@ void Erathostene(struct TListePrem *l)
 /*tableau de bool deja initialisé a true partout si true == 0 !*/
 	bools = calloc(l->nbrMax + 1, sizeof(bool));
 	
-	for (i = 0; i < l->nbrMax; ++i)
+	for (i = 2; i <= l->nbrMax; ++i)
 		bools[i] = true;
-
-
 
 	if(l->nbrMax > 2){
 
-		bools[0] = false;
-		bools[1] = false;
-
-		l->nbrPrem = l->nbrMax - 2;
+		l->nbrPrem = l->nbrMax - 1;
 
 		racine = sqrt(l->nbrMax);
 
-		for (nb = 2; nb < racine; nb++) {
+		for (nb = 2; nb <= racine; nb++) {
 			k = l->nbrMax / nb;
 			for (i = nb; i <= k; i++){
 				if(bools[i * nb] == true){
@@ -87,19 +82,12 @@ void Erathostene(struct TListePrem *l)
 	}
 
 	t = clock() - t;
-
-	for (i = 0; i < l->nbrMax; ++i)
-		printf("%d : %d\n", i, bools[i]);
-
-	printf("%d\n", l->nbrPrem );
-	printf("%f\n", (float)t);
-
-	getchar();
+	printf("Duree calculs : %.2f\n", (float)t / 1000000);
 
 	l->pPrem = calloc(l->nbrPrem + 1, sizeof(int));
 	nb = 0;
 
-	for (i = 0; i < l->nbrMax; ++i)
+	for (i = 0; i <= l->nbrMax; ++i)
 		if (bools[i] == true)
 			l->pPrem[nb++] = i;
 
@@ -112,13 +100,19 @@ void AfficherPremiers(struct TListePrem *l)
 	int i;
 	printf("Il y a %d nombre premiers inferieurs a %d\n", l->nbrPrem, l->nbrMax);
 
-
-	for (i = 0; i < l->nbrPrem; ++i)
-		if(i <= 10 )
-			printf("Nombre premier = %10d : %11d ", i,l->pPrem[i]);
-		else
-			printf("\n...\n");
-	printf("\n");
+	if (l->nbrPrem > 20)
+	{
+		for (i = 0; i < 10; ++i)
+			printf("Nombre premier n %10d : %11d \n", i,l->pPrem[i]);
+		printf("\n...\n\n");
+		for (i = l->nbrPrem-10; i < l->nbrPrem; ++i)
+			printf("Nombre premier n %10d : %11d \n", i,l->pPrem[i]);
+		
+	}
+	else{
+		for (i = 0; i < l->nbrPrem; ++i)
+			printf("Nombre premier n %10d : %11d \n", i,l->pPrem[i]);
+	}
 }
 
 void DetruireTListePrem(struct TListePrem *l)
