@@ -16,8 +16,8 @@
 
 /* typedef short int bool; */
 typedef unsigned char bool;
-#define false 0
-#define true 1
+#define false 1
+#define true 0
 
 #define MAX 2147483647 /* (2^31-1) */
 
@@ -58,43 +58,43 @@ void Erathostene(struct TListePrem *l)
 	double racine;
 	clock_t t = clock();
 
-/*tableau de bool deja initialisé a true partout si true == 0 !*/
-	bools = calloc(l->nbrMax + 1, sizeof(bool));
 	
-	for (i = 2; i <= l->nbrMax; ++i)
-		bools[i] = true;
+	bools = calloc(l->nbrMax/2+1, sizeof(bool));
+	
+/*tableau de bool deja initialisé a true partout si true == 0 !*/
+/*	for (i = 1; i <= l->nbrMax/2; ++i)
+		bools[i] = true;*/
 
-	if(l->nbrMax > 2){
-/*
-		l->nbrPrem = l->nbrMax-2;
-
-*/		l->nbrPrem = (l->nbrMax/2)+(l->nbrMax%2);
+	if(l->nbrMax >= 2){
+		l->nbrPrem = (l->nbrMax/2)+(l->nbrMax%2);
+		bools[0] = false;
 
 		racine = sqrt(l->nbrMax);
 
 		for (nb = 3; nb <= racine; nb+=2) {
 			k = l->nbrMax / nb;
-			for (i = nb; i <= k; i++){
-				if(bools[i * nb] == true){
-					bools[i * nb] = false;
-					l->nbrPrem--;
+			if(bools[nb/2] == true)
+				for (i = nb; i <= k; i+=2){
+					if(bools[(i * nb)/2] == true){
+						bools[(i * nb)/2] = false;
+						l->nbrPrem--;
+					}
 				}
-			}
 		}
 	}
-
-	t = clock() - t;
-	printf("Duree calculs : %.2f\n", (float)t / 1000000);
 
 	l->pPrem = calloc(l->nbrPrem + 1, sizeof(int));
 	nb = 0;
 
 	l->pPrem[nb++] = 2;
-	for (i = 3; i <= l->nbrMax; ++i)
-		if (bools[i] == true && i%2)
-			l->pPrem[nb++] = i;
+	for (i = 1; i <= l->nbrMax/2; ++i)
+		if (bools[i] == true)
+			l->pPrem[nb++] = (i*2)+1;
 
 	free(bools);
+
+	t = clock() - t;
+	printf("Duree calculs : %.2f\n", (float)t / 1000000);
 }
 
 
