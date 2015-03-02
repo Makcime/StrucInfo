@@ -65,12 +65,14 @@ void Erathostene(struct TListePrem *l)
 		bools[i] = true;
 
 	if(l->nbrMax > 2){
+/*
+		l->nbrPrem = l->nbrMax-2;
 
-		l->nbrPrem = l->nbrMax - 1;
+*/		l->nbrPrem = (l->nbrMax/2)+(l->nbrMax%2);
 
 		racine = sqrt(l->nbrMax);
 
-		for (nb = 2; nb <= racine; nb++) {
+		for (nb = 3; nb <= racine; nb+=2) {
 			k = l->nbrMax / nb;
 			for (i = nb; i <= k; i++){
 				if(bools[i * nb] == true){
@@ -87,8 +89,9 @@ void Erathostene(struct TListePrem *l)
 	l->pPrem = calloc(l->nbrPrem + 1, sizeof(int));
 	nb = 0;
 
-	for (i = 0; i <= l->nbrMax; ++i)
-		if (bools[i] == true)
+	l->pPrem[nb++] = 2;
+	for (i = 3; i <= l->nbrMax; ++i)
+		if (bools[i] == true && i%2)
 			l->pPrem[nb++] = i;
 
 	free(bools);
