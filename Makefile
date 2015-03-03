@@ -7,12 +7,14 @@ IO = InOut/src/inout
 
 # Exo
 A = ErathosteneStatic/ErathosteneStatic
-C = ErathosteneDyna/ErathosteneDyna
 B = Hello/hello
+C = ErathosteneDyna/ErathosteneDyna
+D = Samia/EraDyna3
 
 TARGET_BIN = $(A).x
 TARGET_BIN += $(B).x
 TARGET_BIN += $(C).x
+TARGET_BIN += $(D).x
 
 all: $(TARGET_BIN)
 
@@ -37,6 +39,13 @@ $(C).x: $(C).o $(IO).o
 
 $(C).o: $(C).c 
 	$(CC) -o $(C).o -c $(C).c $(CFLAGS)
+
+#Samia
+$(D).x: $(D).o $(IO).o
+	$(CC) -o $(D).x $(D).o $(IO).o $(LDFLAGS)
+
+$(D).o: $(D).c 
+	$(CC) -o $(D).o -c $(D).c $(CFLAGS)
 
 #InOut
 $(IO).o: $(IO).c 
