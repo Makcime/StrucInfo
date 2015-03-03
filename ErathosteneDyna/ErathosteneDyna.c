@@ -54,7 +54,7 @@ void InitialiserTListePrem(struct TListePrem *l)
 void Erathostene(struct TListePrem *l)
 {
 	bool* bools = NULL;
-	int i, nb, k;
+	int i, nb, k, bools_size;
 	double racine;
 	clock_t t = clock();
 	
@@ -66,32 +66,34 @@ void Erathostene(struct TListePrem *l)
 	if(l->nbrMax >= 2){
 
 		/* init du nbre max de prems == au nbre d'impairs*/
-		l->nbrPrem = (l->nbrMax/2)+(l->nbrMax%2);
-		bools = calloc(l->nbrPrem, sizeof(bool));
+		bools_size = (l->nbrMax/2)+(l->nbrMax%2);
+		bools = calloc(bools_size, sizeof(bool));
+		l->nbrPrem = bools_size;
 		bools[0] = false;
 
+		/*Erato defini le nombre max d'iteration 
+		comme la racine du nombre maximum*/
 		racine = sqrt(l->nbrMax);
 
-		for (nb = 3; nb <= racine; nb+=2) {
-			if(bools[nb/2] == true){
-				k = l->nbrMax / nb;
+		/*itérer pour tous les impairs jusqu'à la racine*/
+		for (nb = 3; nb <= racine; nb+=2)
+			if(bools[nb/2] == true){	/* l'impair considéré est il un premier? */
+				k = l->nbrMax / nb; /* si oui, combien a-t-il de multiple jusqu'au max? */
+				/* Effacer tout les multiples */
 				for (i = nb; i <= k; i+=2)
 					if(bools[(i * nb)/2] == true){
 						bools[(i * nb)/2] = false;
-						l->nbrPrem--;
+						/* for each bool toggle from true to false */
+						/* decrement the total number of prems */
+						l->nbrPrem--; 
 					}
 			}	
-		}
-	}else{
-		l->nbrPrem = 0;
-	}
 
-	l->pPrem = calloc(l->nbrPrem + 1, sizeof(int));
-	nb = 0;
-
-	if(l->nbrPrem){
-		l->pPrem[nb++] = 2;
-		for (i = 1; i <= l->nbrMax/2; ++i)
+		l->pPrem = calloc(l->nbrPrem + 1, sizeof(int));
+		nb = 0;
+		l->pPrem[nb++] = 2; /* si il existe au moins un prem, il == 2 */
+		/* remplir le tableau de prems en fct des indices de bools à true*/
+		for (i = 1; i <= bools_size; ++i)
 			if (bools[i] == true)
 				l->pPrem[nb++] = (i*2)+1;
 		free(bools);
@@ -100,7 +102,6 @@ void Erathostene(struct TListePrem *l)
 	t = clock() - t;
 	printf("Duree calculs : %.2f\n", (float)t / 1000000);
 }
-
 
 void AfficherPremiers(struct TListePrem *l)
 {
@@ -114,7 +115,6 @@ void AfficherPremiers(struct TListePrem *l)
 		printf("\n...\n\n");
 		for (i = l->nbrPrem-10; i < l->nbrPrem; ++i)
 			printf("Nombre premier n %10d : %11d \n", i,l->pPrem[i]);
-		
 	}
 	else{
 		for (i = 0; i < l->nbrPrem; ++i)
