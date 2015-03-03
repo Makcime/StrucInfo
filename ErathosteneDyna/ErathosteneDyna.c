@@ -57,10 +57,6 @@ void Erathostene(struct TListePrem *l)
 	int i, nb, k, bools_size;
 	double racine;
 	clock_t t = clock();
-	
-/*tableau de bool deja initialisé a true partout si true == 0 !*/
-/*	for (i = 1; i <= l->nbrMax/2; ++i)
-		bools[i] = true;*/
 
 	/*lancer l'algo seulement si il existe au moins 1 prem*/
 	if(l->nbrMax >= 2){
@@ -69,6 +65,10 @@ void Erathostene(struct TListePrem *l)
 		bools_size = (l->nbrMax/2)+(l->nbrMax%2);
 		bools = calloc(bools_size, sizeof(bool));
 		l->nbrPrem = bools_size;
+	
+		/*tableau de bool deja initialisé a true partout si true == 0 !*/
+		/*	for (i = 1; i <= l->nbrMax/2; ++i)
+				bools[i] = true;*/
 		bools[0] = false;
 
 		/*Erato defini le nombre max d'iteration 
