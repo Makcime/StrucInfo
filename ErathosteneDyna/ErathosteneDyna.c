@@ -53,7 +53,7 @@ void InitialiserTListePrem(struct TListePrem *l)
 
 void Erathostene(struct TListePrem *l)
 {
-	bool* bools;
+	bool* bools = NULL;
 	int i, nb, k;
 	double racine;
 	clock_t t = clock();
@@ -62,11 +62,12 @@ void Erathostene(struct TListePrem *l)
 /*	for (i = 1; i <= l->nbrMax/2; ++i)
 		bools[i] = true;*/
 
-	/* init du nbre max de prems == au nbre d'impairs*/
-	l->nbrPrem = (l->nbrMax/2)+(l->nbrMax%2);
-	bools = calloc(l->nbrPrem, sizeof(bool));
-
+	/*lancer l'algo seulement si il existe au moins 1 prem*/
 	if(l->nbrMax >= 2){
+
+		/* init du nbre max de prems == au nbre d'impairs*/
+		l->nbrPrem = (l->nbrMax/2)+(l->nbrMax%2);
+		bools = calloc(l->nbrPrem, sizeof(bool));
 		bools[0] = false;
 
 		racine = sqrt(l->nbrMax);
@@ -93,9 +94,8 @@ void Erathostene(struct TListePrem *l)
 		for (i = 1; i <= l->nbrMax/2; ++i)
 			if (bools[i] == true)
 				l->pPrem[nb++] = (i*2)+1;
+		free(bools);
 	}
-
-	free(bools);
 
 	t = clock() - t;
 	printf("Duree calculs : %.2f\n", (float)t / 1000000);
@@ -126,6 +126,6 @@ void DetruireTListePrem(struct TListePrem *l)
 {	
 	l->nbrPrem=0;
 	l->nbrMax=0;
-	free(l->pPrem);
+	free(l->pPrem); /*free() should only be called on memory you allocated (or on NULL).*/
 }
  
