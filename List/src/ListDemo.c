@@ -96,20 +96,21 @@ void InsertRandomStringsAtEnd(struct TList* pList, int n) {
 }
 
 void EraseNodesFromBegin(struct TList* pList) {
-	TIteratorList it;
+/*	TIteratorList it;
 	for (it = BeginOfList(pList); it != EndOfList(pList); free(*GetPDataInList(
-			it)), it = EraseInList(pList, it))
+			it)), it = EraseInList(pList, it))*/
 		;
 }
 
 void EraseNodesFromEnd(struct TList* pList) {
-	TIteratorList it;
+/*	TIteratorList it;
 	for (it = EndOfList(pList); it != BeginOfList(pList); it = PreviousInList(
 			it), free(*GetPDataInList(it)), it = EraseInList(pList, it))
-		;
+		;*/
 }
 
 int main(void) {
+	/*
 	struct TList* pList = CreateList();
 	puts("struct TList* pList = CreateList() ...");
 	ShowList(pList);
@@ -143,7 +144,8 @@ int main(void) {
 	puts(
 			"WalkSequenceList(DestroyString, BeginOfList(pList),EndOfList(pList)) ...");
 	ShowList(pList);
-	puts("\n!!!BYE!!!");
 	DestroyList(pList);
+	*/
+	puts("\n!!!BYE!!!");
 	return EXIT_SUCCESS;
 }
