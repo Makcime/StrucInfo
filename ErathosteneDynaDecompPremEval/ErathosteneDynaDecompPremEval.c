@@ -18,6 +18,8 @@
 #include <inttypes.h> // C99 -> printf("%" PRId32 ", %" PRIu8 "\n",myint32,myunit8), ...
 #include <stdbool.h>  // C99 -> bool, true, false
 
+#define MAX_FACT 15
+
 struct TPrimesList { // old name : TListePrem
     int32_t nbrMax;
     int32_t* pPrimes; // old name : pPrem
