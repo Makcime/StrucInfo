@@ -11,7 +11,7 @@ A = ErathosteneStatic/ErathosteneStatic
 B = Hello/hello
 C = ErathosteneDyna/ErathosteneDyna
 D = Samia/EraDyna3
-G = ErathosteneDynaDecompPremEval/DynaDecompPremEval
+G = ErathosteneDynaDecompPremEval/ErathosteneDynaDecompPremEval
 
 TARGET_BIN = $(A).x
 TARGET_BIN += $(B).x
@@ -29,13 +29,12 @@ TARGET_OBJ += $(IO).o
 
 all: $(TARGET_BIN)
 
-
 #ErathosteneDynaDecompPremEval
 $(G).x: $(G).o
 	$(CC) -o $(G).x $(G).o $(LDFLAGS)
 
 $(G).o: $(G).c 
-	$(CC) -o $(G).o -c $(G).c $(CFLAGS)
+	$(CC) -o $(G).o -c $(G).c $(CFLAGS_99)
 
 #Hello
 $(B).x: $(B).o 
