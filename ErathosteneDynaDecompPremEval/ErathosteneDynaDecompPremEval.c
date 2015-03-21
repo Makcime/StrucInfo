@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     struct TPrimesFact primesFact;
     InitializeTPrimesFact(&primesFact);
 
-    MyTests(&primesFact, NULL);
+    // MyTests(&primesFact, NULL);
 
     struct TPrimesList listPrimes; // C99 -> can declare variable here
 
@@ -290,6 +290,7 @@ void PrimesFactorization(struct TPrimesFact* ppf, struct TPrimesList* ppl){
         nb = (ppf->number / 2) * ppf->sign;
         tPow[0]++;
     }
+
     else{
         nb = ppf->number * ppf->sign;
     }
@@ -300,8 +301,8 @@ void PrimesFactorization(struct TPrimesFact* ppf, struct TPrimesList* ppl){
     ppf->cFact = 0;
 
     if(ppl == NULL || sizeof(ppl) == 0){
-        /* decomposer avec les nombre impairs */
         while(nb > 1){
+        /* decomposer avec les nombre impairs */
             
             if (!(nb % divider))
                 ppf->cFact++;
@@ -317,6 +318,11 @@ void PrimesFactorization(struct TPrimesFact* ppf, struct TPrimesList* ppl){
             else
                 divider++;
         }
+        if(! ppf->cFact){
+            tFact[ppf->cFact] = ppf->number * ppf->sign ;
+            tPow[ppf->cFact]++;
+        }
+         
     }
 
     else{
@@ -324,7 +330,8 @@ void PrimesFactorization(struct TPrimesFact* ppf, struct TPrimesList* ppl){
 
         if(!(ppl->nbrMax % 2))
             divider++;
-        while(nb > 1){
+
+        while(nb > 1 ){
             if(indice < ppl->cPrimes - 1){
                 if (!(nb % ppl->pPrimes[indice]))
                     ppf->cFact++;
@@ -336,7 +343,6 @@ void PrimesFactorization(struct TPrimesFact* ppf, struct TPrimesList* ppl){
                 }   
                 indice++;
             }else{
-
                 if (!(nb % divider))
                     ppf->cFact++;
                 
@@ -374,7 +380,7 @@ bool VerifyPrimesFactorization(struct TPrimesFact* ppf){
             verify *= ppf->pFact[i];
 
     verify *= ppf->sign;
-    
+
     return (verify == ppf->number);
 }
 
@@ -386,7 +392,7 @@ void ShowPrimesFactorization(struct TPrimesFact* ppf){
     for (int i = 0; i < ppf->cFact; ++i)
         printf(" %"PRId64"^%d",ppf->pFact[i], ppf->pPow[i]);
 
-    printf("\n");
+    puts("");
 
     return;
 }
