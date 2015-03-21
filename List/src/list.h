@@ -24,6 +24,9 @@ TIteratorList EndOfList(struct TList* pList);
 int IsEmptyList(struct TList* pList);
 int SizeOfList(struct TList* pList);
 
+TIteratorList NextInList(TIteratorList iter);
+TIteratorList PreviousInList(TIteratorList iter);
+
 struct TList* GetPDataInList(TIteratorList iter);
 
 void InsertInList(struct TList* pList, TIteratorList iter, TValueList * value);

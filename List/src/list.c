@@ -65,6 +65,19 @@ void InsertInList(struct TList* pList, TIteratorList iter, TValueList * value){
 }
 
 /*--------------------------------------------------------------------*/
+TIteratorList NextInList(TIteratorList iter){
+	return ;
+
+}
+
+/*--------------------------------------------------------------------*/
+TIteratorList PreviousInList(TIteratorList iter){
+	return ;
+
+}
+
+
+/*--------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------- */
 /* Definition of utilities funtions                                          */
 /* ...                                                                       */
