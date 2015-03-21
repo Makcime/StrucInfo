@@ -45,6 +45,18 @@ TIteratorList EndOfList(struct TList* pList){
 }
 
 /*--------------------------------------------------------------------*/
+TIteratorList NextInList(TIteratorList iter){
+	return ;
+
+}
+
+/*--------------------------------------------------------------------*/
+TIteratorList PreviousInList(TIteratorList iter){
+	return ;
+
+}
+
+/*--------------------------------------------------------------------*/
 int IsEmptyList(struct TList* pList){
 	return;
 }
@@ -64,16 +76,30 @@ void InsertInList(struct TList* pList, TIteratorList iter, TValueList * value){
 	return;
 }
 
-/*--------------------------------------------------------------------*/
-TIteratorList NextInList(TIteratorList iter){
-	return ;
 
+/*--------------------------------------------------------------------*/
+struct TList* CreateList(){
+	return;
 }
 
 /*--------------------------------------------------------------------*/
-TIteratorList PreviousInList(TIteratorList iter){
-	return ;
+DestroyList(struct TList* pList){
+	return;
+}
 
+/*--------------------------------------------------------------------*/
+TIteratorList EraseInList(struct TList* pList, TIteratorList iter){
+	return;
+}
+
+/*--------------------------------------------------------------------*/
+void WalkSequenceList(FCallbackOnValue cb, TIteratorList startIt ,TIteratorList stopIt){
+	return;
+}
+
+/*--------------------------------------------------------------------*/
+EraseSequenceInList(struct TList* pList, TIteratorList startIt, TIteratorList stopIt){
+	return;
 }
 
 

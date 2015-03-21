@@ -110,7 +110,7 @@ void EraseNodesFromEnd(struct TList* pList) {
 }
 
 int main(void) {
-	/*
+	///*
 	struct TList* pList = CreateList();
 	puts("struct TList* pList = CreateList() ...");
 	ShowList(pList);
@@ -145,7 +145,7 @@ int main(void) {
 			"WalkSequenceList(DestroyString, BeginOfList(pList),EndOfList(pList)) ...");
 	ShowList(pList);
 	DestroyList(pList);
-	*/
+	//*/
 	puts("\n!!!BYE!!!");
 	return EXIT_SUCCESS;
 }

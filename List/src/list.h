@@ -31,5 +31,15 @@ struct TList* GetPDataInList(TIteratorList iter);
 
 void InsertInList(struct TList* pList, TIteratorList iter, TValueList * value);
 
+struct TList* CreateList();
+DestroyList(struct TList* pList);
+
+TIteratorList EraseInList(struct TList* pList, TIteratorList iter);
+
+void WalkSequenceList(FCallbackOnValue cb, TIteratorList startIt ,TIteratorList stopIt);
+EraseSequenceInList(struct TList* pList, TIteratorList startIt, TIteratorList stopIt);
+
+
+
 /* ------------------------------------------------------------------------- */
 #endif /* LIST_H_ */
