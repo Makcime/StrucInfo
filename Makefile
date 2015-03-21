@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-g -pedantic -Wall
+CFLAGS= -g -pedantic -Wall
+CFLAGS_99= -g -pedantic -Wall -std=c99
 LDFLAGS= -lm
 
 # utils
@@ -11,6 +12,7 @@ A = ErathosteneStatic/ErathosteneStatic
 B = Hello/hello
 C = ErathosteneDyna/ErathosteneDyna
 D = Samia/EraDyna3
+G = ErathosteneDynaDecompPremEval/ErathosteneDynaDecompPremEval
 E = List/src/ListDemo
 F = List/src/ListDemo
 
@@ -19,18 +21,26 @@ TARGET_BIN += $(B).x
 TARGET_BIN += $(C).x
 TARGET_BIN += $(D).x
 TARGET_BIN += $(E).x
-
+TARGET_BIN += $(G).x
 
 TARGET_OBJ = $(A).o
 TARGET_OBJ += $(B).o
 TARGET_OBJ += $(C).o
 TARGET_OBJ += $(D).o
 TARGET_OBJ += $(E).o
-TARGET_OBJ += $(IO).o
+TARGET_OBJ += $(G).o
 TARGET_OBJ += $(LIST).o
-
+TARGET_OBJ += $(IO).o
 
 all: $(TARGET_BIN)
+
+#ErathosteneDynaDecompPremEval
+$(G).x: $(G).o
+	$(CC) -o $(G).x $(G).o $(LDFLAGS)
+
+$(G).o: $(G).c 
+	$(CC) -o $(G).o -c $(G).c $(CFLAGS_99)
+
 
 #ListDemo
 $(E).x: $(E).o $(LIST).o
@@ -81,4 +91,5 @@ clean:
 	rm -rf $(TARGET_OBJ)
 
 mrproper: clean
+	rm -rf $(TARGET_BIN)
 	rm -rf $(TARGET_BIN)
