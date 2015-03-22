@@ -27,7 +27,7 @@ int SizeOfList(struct TList* pList);
 TIteratorList NextInList(TIteratorList iter);
 TIteratorList PreviousInList(TIteratorList iter);
 
-struct TList* GetPDataInList(TIteratorList iter);
+TValueList* GetPDataInList(TIteratorList iter);
 
 void InsertInList(struct TList* pList, TIteratorList iter, TValueList * value);
 

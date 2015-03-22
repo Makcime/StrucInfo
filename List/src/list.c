@@ -24,8 +24,8 @@ struct TList {
 typedef struct __TNodeList _TNode;
 typedef struct __TNodeList* _TPNode;
 struct __TNodeList {
-	struct __TNodeList * pPrevious;
-	struct __TNodeList * pNext;
+	_TPNode pPrevious;
+	_TPNode pNext;
 	TValueList value;
 };
 /* ------------------------------------------------------------------------- */
@@ -36,69 +36,100 @@ static _TPNode _CreateNode(const TValueList* pv, const _TPNode _pPrevious,
 /* ------------------------------------------------------------------------- */
 /* Definition of funtions declared in list.h                                 */
 TIteratorList BeginOfList(struct TList* pList){
-	return;
+	return pList->_pEndNode->pNext;
 }
-
+ 
 /*--------------------------------------------------------------------*/
 TIteratorList EndOfList(struct TList* pList){
-	return;
+	return pList->_pEndNode;
 }
 
 /*--------------------------------------------------------------------*/
 TIteratorList NextInList(TIteratorList iter){
-	return ;
+	return iter->pNext;
 
 }
 
 /*--------------------------------------------------------------------*/
 TIteratorList PreviousInList(TIteratorList iter){
-	return ;
-
+	return iter->pPrevious;
 }
 
 /*--------------------------------------------------------------------*/
-int IsEmptyList(struct TList* pList){
-	return;
+bool IsEmptyList(struct TList* pList){
+	return (pList->_nodeCount <= 0);
 }
 
 /*--------------------------------------------------------------------*/
 int SizeOfList(struct TList* pList){
-	return;
+	return pList->_nodeCount;
 }
 
 /*--------------------------------------------------------------------*/
-struct TList* GetPDataInList(TIteratorList iter){
-	return;
+TValueList*  GetPDataInList(TIteratorList iter){
+	return &iter->value;
 }
 
 /*--------------------------------------------------------------------*/
-void InsertInList(struct TList* pList, TIteratorList iter, TValueList * value){
-	return;
+void InsertInList(struct TList* pList, TIteratorList iter, 
+	TValueList * value){
+
+	_TPNode pPrevNode = iter->pPrevious;
+
+	_TPNode pNewNode;
+
+	pNewNode = _CreateNode(value, pPrevNode, iter);
+	iter->pPrevious = pNewNode;
+	pPrevNode->pNext = pNewNode;
+	pList->_nodeCount++;
+
+	return;	
 }
 
 
 /*--------------------------------------------------------------------*/
 struct TList* CreateList(){
-	return;
+	struct TList* pList = malloc(sizeof(struct TList));
+	pList->_nodeCount = 0;
+	pList->_pEndNode = _CreateHeaderNode();
+	return pList;
 }
 
 /*--------------------------------------------------------------------*/
 DestroyList(struct TList* pList){
+	free(pList);
 	return;
 }
 
 /*--------------------------------------------------------------------*/
 TIteratorList EraseInList(struct TList* pList, TIteratorList iter){
-	return;
+
+	TIteratorList i = iter->pNext ;
+	iter->pNext->pPrevious = iter->pPrevious; 
+	iter->pPrevious->pNext = iter->pNext;
+	free(iter);
+
+	pList->_nodeCount--;
+
+	return i;
 }
 
 /*--------------------------------------------------------------------*/
 void WalkSequenceList(FCallbackOnValue cb, TIteratorList startIt ,TIteratorList stopIt){
+		TIteratorList it;
+	for (it = startIt; it != stopIt; cb(&it->value), 
+				it = NextInList(it))
+		;
 	return;
 }
 
 /*--------------------------------------------------------------------*/
 EraseSequenceInList(struct TList* pList, TIteratorList startIt, TIteratorList stopIt){
+
+	TIteratorList it;
+	for (it = startIt; it != stopIt; free(*GetPDataInList(it)), 
+				it = EraseInList(pList, it))
+		;
 	return;
 }
 
@@ -106,8 +137,20 @@ EraseSequenceInList(struct TList* pList, TIteratorList startIt, TIteratorList st
 /*--------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------- */
 /* Definition of utilities funtions                                          */
-/* ...                                                                       */
-/* ...                                                                       */
-/* ...                                                                       */
+static _TPNode _CreateHeaderNode(){
+	_TPNode _pEndNode = malloc(sizeof(_TNode));
+	_pEndNode->pPrevious = _pEndNode;
+	_pEndNode->pNext = _pEndNode;
+	return _pEndNode;
+}
+/* ------------------------------------------------------------------------- */
+static _TPNode _CreateNode(const TValueList* pv, const _TPNode _pPrevious,
+	const _TPNode _pNext){
+	_TPNode _pNode = malloc(sizeof(_TNode));
+	_pNode->pPrevious = _pPrevious;
+	_pNode->pNext = _pNext;
+	_pNode->value = *pv;
+	return _pNode;
+}
 /* ------------------------------------------------------------------------- */
 
