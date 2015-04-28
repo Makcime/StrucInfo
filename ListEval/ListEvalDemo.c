@@ -17,16 +17,18 @@
 typedef int bool;
 #define false 0
 #define true 1
+
 /* ------------------------------------------------------------------------- */
 void ShowInt(TValueList* pValue)
 {
     printf("%10d", *pValue);
 }
 /* ------------------------------------------------------------------------- */
-void swap(struct TList* pList, TIteratorList it, TIteratorList next)
-{
-    InsertInList(pList, it, GetPDataInList(next));
-    EraseInList(pList, next);
+void swap(TValueList* a, TValueList* b)
+{   
+    TValueList tmp = *a;
+    *a = *b;
+    *b = tmp;
    return;
 }
 /* ------------------------------------------------------------------------- */
@@ -49,26 +51,69 @@ void ShowList(struct TList* pList)
 
 void BubbleSort(struct TList* pList)
 {
-    int i;
-    TIteratorList it , next, newswap, lastSwap = EndOfList(pList);
+    bool sorted = false;
+    TIteratorList it , next, newswap, lastSwap = EndOfList(pList), front = BeginOfList(pList), back  = EndOfList(pList);
     // repeter tant que l'on swap
-    while(lastSwap)
-    {
-        it = BeginOfList(pList);
-        next = NextInList(it);
-        newswap = NULL;
-        // parcourir la liste jusqu'au dernier swap
-        while(next != lastSwap){
-            if(*GetPDataInList(next) < *GetPDataInList(it)){
-                swap(pList, it, next);
-                newswap = it;
-            }else{
-                it = NextInList(it);
+    // while(lastSwap)
+    // {
+    //     it = BeginOfList(pList);
+    //     next = NextInList(it);
+    //     newswap = NULL;
+    //     // parcourir la liste jusqu'au dernier swap
+    //     while(next != lastSwap){
+    //         if(*GetPDataInList(next) < *GetPDataInList(it)){
+    //             // swap(pList, it, next);
+    //             swap(GetPDataInList(next), GetPDataInList(it));
+    //             newswap = it;
+    //         }else{
+    //             it = NextInList(it);
+    //         }
+    //         next = NextInList(it);
+    //     }
+    //     lastSwap = newswap;
+    // }
+
+    //tant que ya du swap:
+    //  if sens == back:
+    //      parcourir vers la droite jusque back
+    //  else :
+    //      parcourir vers la gauche jusque front
+    //
+
+    while(sorted == false){
+            lastSwap = NULL;
+            next = NextInList(front);
+            for( it = front; it != PreviousInList(back); it = next){
+                next = NextInList(it);
+                if(*GetPDataInList(next) < *GetPDataInList(it)){
+                    swap(GetPDataInList(next), GetPDataInList(it));
+                    lastSwap = it;
+                }
             }
-            next = NextInList(it);
-        }
-        lastSwap = newswap;
+            if(lastSwap){
+                back = lastSwap;
+                lastSwap = NULL;
+            }else{
+                sorted = true;
+            }
+
+            next = PreviousInList(back);
+            for( it = back; it != NextInList(front); it = next){
+                next = PreviousInList(it);
+                if(*GetPDataInList(next) > *GetPDataInList(it)){
+                    swap(GetPDataInList(next), GetPDataInList(it));
+                    lastSwap = it;
+                }
+            }
+            if(lastSwap){
+                front = lastSwap;
+            }else{
+                sorted = true;
+            }  
+        // }
     }
+
+
     return;
 }
 
