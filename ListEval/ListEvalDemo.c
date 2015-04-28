@@ -23,8 +23,10 @@ void ShowInt(TValueList* pValue)
     printf("%10d", *pValue);
 }
 /* ------------------------------------------------------------------------- */
-void swap()
+void swap(struct TList* pList, TIteratorList it, TIteratorList next)
 {
+    InsertInList(pList, it, GetPDataInList(next));
+    EraseInList(pList, next);
    return;
 }
 /* ------------------------------------------------------------------------- */
@@ -47,6 +49,23 @@ void ShowList(struct TList* pList)
 
 void BubbleSort(struct TList* pList)
 {
+    int i;
+    TIteratorList it =  BeginOfList(pList), end = EndOfList(pList), lastSwap = EndOfList(pList), next = NULL;
+    next = NextInList(it);
+    for (i = 0; i < SizeOfList(pList); ++i)
+    {
+        it =  BeginOfList(pList);
+        next = NextInList(it);
+        while(next != end){
+            if(*GetPDataInList(next) < *GetPDataInList(it)){
+                swap(pList, it, next);
+                lastSwap = it;
+            }else
+                it = NextInList(it);
+            next = NextInList(it);
+        }
+        end = lastSwap;
+    }
     return;
 }
 
