@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include "list.h"
+#include "../List/src/list.h"
 /* ------------------------------------------------------------------------- */
 typedef int bool;
 #define false 0
@@ -23,19 +23,31 @@ void ShowInt(TValueList* pValue)
     printf("%10d", *pValue);
 }
 /* ------------------------------------------------------------------------- */
-void swap(...)
+void swap()
 {
-   ...
+   return;
 }
 /* ------------------------------------------------------------------------- */
-void ShowList(...)
+void ShowList(struct TList* pList)
 {
-    ...
+    int i = 0;
+    TIteratorList iter = BeginOfList(pList), end = EndOfList(pList);
+    printf("ShowList -> ");
+    printf("IsEmptyList(pList) : %d", IsEmptyList(pList));
+    printf(", SizeOfList(pList) : %d\n", SizeOfList(pList));
+    while (iter != end) {
+        if(!(i++ % 8)){
+            puts("");
+        }
+        ShowInt(GetPDataInList(iter));
+        iter = NextInList(iter);
+    }
+    puts("");
 }
 
-void BubbleSort(...)
+void BubbleSort(struct TList* pList)
 {
- ...
+    return;
 }
 
 /*
@@ -47,9 +59,14 @@ void BubbleSort(...)
 9 8 7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 8 , 9 8 7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 8 9 
  
 */
-void InsertInts(...)
+void InsertInts(struct TList* pList, int nb)
 {
-    ...
+    int i;
+    for (i = 0; i < nb; ++i)
+    {
+        InsertInList(pList, BeginOfList(pList), &i);
+        InsertInList(pList, EndOfList(pList), &i);
+    }
 }
 
 int main(void)
