@@ -1,0 +1,23 @@
+struct TList* pList = CreateList() ...
+ShowList -> IsEmptyList(pList) : 1, SizeOfList(pList) : 0
+
+ShowList -> IsEmptyList(pList) : 0, SizeOfList(pList) : 20
+         9         8         7         6         5         4         3         2
+         1         0         0         1         2         3         4         5
+         6         7         8         9
+ShowList -> IsEmptyList(pList) : 0, SizeOfList(pList) : 20
+         0         0         1         1         2         2         3         3
+         4         4         5         5         6         6         7         7
+         8         8         9         9
+ShowList -> IsEmptyList(pList) : 0, SizeOfList(pList) : 21
+         0         0         1         1         2         2         3         3
+         4         4         5         5         6         6         7         7
+         8         8         9         9         7
+ShowList -> IsEmptyList(pList) : 0, SizeOfList(pList) : 21
+         0         0         1         1         2         2         3         3
+         4         4         5         5         6         6         7         7
+         7         8         8         9         9
+
+!!!BYE!!!
+
+Press any key to continue.
