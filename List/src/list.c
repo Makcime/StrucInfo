@@ -98,8 +98,8 @@ struct TList* CreateList(){
 /*--------------------------------------------------------------------*/
 void DestroyList(struct TList* pList){
 
-	EraseSequenceInList(pList, BeginOfList(pList), EndOfList(pList));
-	free(pList->_pEndNode);
+	// EraseSequenceInList(pList, BeginOfList(pList), EndOfList(pList));
+	// free(pList->_pEndNode);
 	free(pList);
 	return;
 }
