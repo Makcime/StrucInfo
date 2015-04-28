@@ -14,7 +14,6 @@ C = ErathosteneDyna/ErathosteneDyna
 D = Samia/EraDyna3
 G = ErathosteneDynaDecompPremEval/ErathosteneDynaDecompPremEval
 E = List/src/ListDemo
-F = List/src/ListDemo
 H = /home/max/Documents/StrucInfo/ListEval/ListEvalDemo
 
 TARGET_BIN = $(A).x
