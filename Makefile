@@ -15,6 +15,7 @@ D = Samia/EraDyna3
 G = ErathosteneDynaDecompPremEval/ErathosteneDynaDecompPremEval
 E = List/src/ListDemo
 F = List/src/ListDemo
+H = /home/max/Documents/StrucInfo/ListEval/ListEvalDemo
 
 TARGET_BIN = $(A).x
 TARGET_BIN += $(B).x
@@ -22,6 +23,7 @@ TARGET_BIN += $(C).x
 TARGET_BIN += $(D).x
 TARGET_BIN += $(E).x
 TARGET_BIN += $(G).x
+TARGET_BIN += $(H).x
 
 TARGET_OBJ = $(A).o
 TARGET_OBJ += $(B).o
@@ -31,8 +33,16 @@ TARGET_OBJ += $(E).o
 TARGET_OBJ += $(G).o
 TARGET_OBJ += $(LIST).o
 TARGET_OBJ += $(IO).o
+TARGET_OBJ += $(H).o
 
 all: $(TARGET_BIN)
+
+#ErathosteneDynaDecompPremEval
+$(H).x: $(H).o
+	$(CC) -o $(H).x $(H).o $(LIST).o $(LDFLAGS)
+
+$(H).o: $(H).c 
+	$(CC) -o $(H).o -c $(H).c $(CFLAGS_99)
 
 #ErathosteneDynaDecompPremEval
 $(G).x: $(G).o
