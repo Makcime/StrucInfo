@@ -50,21 +50,24 @@ void ShowList(struct TList* pList)
 void BubbleSort(struct TList* pList)
 {
     int i;
-    TIteratorList it =  BeginOfList(pList), end = EndOfList(pList), lastSwap = EndOfList(pList), next = NULL;
-    next = NextInList(it);
-    for (i = 0; i < SizeOfList(pList); ++i)
+    TIteratorList it , next, newswap, lastSwap = EndOfList(pList);
+    // repeter tant que l'on swap
+    while(lastSwap)
     {
-        it =  BeginOfList(pList);
+        it = BeginOfList(pList);
         next = NextInList(it);
-        while(next != end){
+        newswap = NULL;
+        // parcourir la liste jusqu'au dernier swap
+        while(next != lastSwap){
             if(*GetPDataInList(next) < *GetPDataInList(it)){
                 swap(pList, it, next);
-                lastSwap = it;
-            }else
+                newswap = it;
+            }else{
                 it = NextInList(it);
+            }
             next = NextInList(it);
         }
-        end = lastSwap;
+        lastSwap = newswap;
     }
     return;
 }
