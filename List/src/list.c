@@ -98,8 +98,8 @@ struct TList* CreateList(){
 /*--------------------------------------------------------------------*/
 void DestroyList(struct TList* pList){
 
-	// EraseSequenceInList(pList, BeginOfList(pList), EndOfList(pList));
-	// free(pList->_pEndNode);
+	EraseSequenceInList(pList, BeginOfList(pList), EndOfList(pList));
+	free(pList->_pEndNode);
 	free(pList);
 	return;
 }
@@ -128,7 +128,7 @@ void WalkSequenceList(FCallbackOnValue cb, TIteratorList startIt ,TIteratorList 
 void EraseSequenceInList(struct TList* pList, TIteratorList startIt, TIteratorList stopIt){
 
 	TIteratorList it;
-	for (it = startIt; it != stopIt; free(*GetPDataInList(it)), it = EraseInList(pList, it));
+	for (it = startIt; it != stopIt; it = EraseInList(pList, it));
 	return;
 }
 
