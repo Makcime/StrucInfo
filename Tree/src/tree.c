@@ -54,6 +54,8 @@ static void __RecurPrefix(_TPNode iter);
 static void __RecurPostfix(_TPNode iter);
 static int __GetRecurDeep(_TPNode iter);
 static _TPNode __GetNodeByLevelAndNumber(_TPNode iter, int level, int number);
+static _TPNode _Root(struct TTree* pTre);
+
 /* ------------------------------------------------------------------------- */
 static bool _isCallOnLeave = false;
 static FCallbackOnValue _fCallbackInfix = 0;
@@ -61,10 +63,84 @@ static FCallbackOnValue __fCallbackPrefix = 0;
 static FCallbackOnValue __fCallbackPostfix = 0;
 /* ------------------------------------------------------------------------- */
 /* Definition of funtions declared in tree.h                                 */
-/* ...                                                                       */
-/* ...                                                                       */
-/* ...                                                                       */
 
+/* ------------------------------------------------------------------------- */
+struct TTree* CreateTree(TKeyOf __KeyOf, TComp __KeyCompare){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TKeyTree GetKeyInTree(struct TTree* pTree, TIteratorTree it){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TValueTree* GetPDataInTree(TIteratorTree it){
+	return;
+/* ------------------------------------------------------------------------- */
+}
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree BeginOfTree(struct TTree* pTree){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree EndOfTree(struct TTree* pTree){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+bool IsEmptyTree(struct TTree* pTree){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+int SizeOfTree(struct TTree* pTree){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree NextInTree(TIteratorTree it){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree PreviousInTree(TIteratorTree it){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+void InsertInTree(struct TTree* pTree, struct TPairPtrSize* data){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+void EraseKeysInTree(struct TTree* pTree, TKeyTree k){
+	return;
+}
+
+void EraseSequenceInTree(struct TTree* pTree, TIteratorTree first, TIteratorTree last){
+	return;
+}
+
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree UpperBoundInTree(struct TTree* pTree, TKeyTree k){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+TIteratorTree LowerBoundInTree(struct TTree* pTree, TKeyTree k){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
 void WalkTree(struct TTree* pTree, FCallbackOnValue fCallBack) {
 	_fCallbackInfix = fCallBack;
 	_isCallOnLeave = false;
@@ -166,8 +242,41 @@ void __ShowLevelTree(struct TTree* pTree, FCallbackOnValue fShowValue,
 }
 /* ------------------------------------------------------------------------- */
 /* Definition of utilities funtions                                          */
-/* ...                                                                       */
-/* ...                                                                       */
-/* ...                                                                       */
+/* ------------------------------------------------------------------------- */
+
+static void _RecurInfix(_TPNode iter){
+	return;
+}
+
+static void __RecurPrefix(_TPNode iter){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+
+static void __RecurPostfix(_TPNode iter){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+
+static int __GetRecurDeep(_TPNode iter){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+
+static _TPNode __GetNodeByLevelAndNumber(_TPNode iter, int level, int number){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+
+static _TPNode _Root(struct TTree* pTre){
+	return;
+}
+
+/* ------------------------------------------------------------------------- */
+
 
 /* ------------------------------------------------------------------------- */

@@ -6,7 +6,8 @@ LDFLAGS= -lm
 # utils
 IO = InOut/src/inout
 LIST = List/src/list
-TREE = Tree/src/Tree
+TREE = Tree/src/tree
+ALLOC = Tree/src/allocator
 
 # Exo
 A = ErathosteneStatic/ErathosteneStatic
@@ -37,15 +38,27 @@ TARGET_OBJ += $(LIST).o
 TARGET_OBJ += $(IO).o
 TARGET_OBJ += $(H).o
 TARGET_OBJ += $(I).o
+TARGET_OBJ += $(TREE).o
+TARGET_OBJ += $(ALLOC).o
 
 all: $(TARGET_BIN)
 
+
+
 #TreeDemo
-$(I).x: $(I).o
-	$(CC) -o $(I).x $(I).o $(LIST).o $(LDFLAGS)
+$(I).x: $(I).o $(TREE).o $(ALLOC).o
+	$(CC) -o $(I).x $(I).o $(TREE).o $(ALLOC).o $(LDFLAGS)
 
 $(I).o: $(I).c 
 	$(CC) -o $(I).o -c $(I).c $(CFLAGS_99)
+
+# Allocator
+$(ALLOC).o: $(ALLOC).c 
+	$(CC) -o $(ALLOC).o -c $(ALLOC).c $(CFLAGS)
+
+#Tree
+# $(TREE).o: $(TREE).c $(ALLOC).c
+# 	$(CC) -o $(TREE).o -c $(TREE).c $(ALLOC).c $(CFLAGS)
 
 #Tree
 $(TREE).o: $(TREE).c 

@@ -21,12 +21,12 @@ struct __TNodeTree;
 typedef struct __TNodeTree* TIteratorTree;
 /* ------------------------------------------------------------------------- */
 /* TODO ...                                                                  */
-struct TTree* pTree CreateTree(TKeyOf __KeyOf, TComp __KeyCompare);
+struct TTree* CreateTree(TKeyOf __KeyOf, TComp __KeyCompare);
 TKeyTree GetKeyInTree(struct TTree* pTree, TIteratorTree it);
 TValueTree* GetPDataInTree(TIteratorTree it);
 TIteratorTree BeginOfTree(struct TTree* pTree);
 TIteratorTree EndOfTree(struct TTree* pTree);
-bool IsEmptyTree(struct TTree* pTree);
+int IsEmptyTree(struct TTree* pTree);
 int SizeOfTree(struct TTree* pTree);
 TIteratorTree NextInTree(TIteratorTree it);
 TIteratorTree PreviousInTree(TIteratorTree it);
@@ -35,8 +35,8 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it);
 void EraseKeysInTree(struct TTree* pTree, TKeyTree k);
 TIteratorTree UpperBoundInTree(struct TTree* pTree, TKeyTree k);
 TIteratorTree LowerBoundInTree(struct TTree* pTree, TKeyTree k);
-int CountNbrOfKeys(struct TTree* pTree, TKeyTree k);
 void WalkTree(struct TTree* pTree, FCallbackOnValue cb);
+void EraseSequenceInTree(struct TTree* pTree, TIteratorTree first, TIteratorTree last);
 
 /* ------------------------------------------------------------------------- */
 void __ShowPrefixTree(struct TTree* pTree, FCallbackOnValue fShowValue,
