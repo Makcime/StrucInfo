@@ -30,7 +30,7 @@ int IsEmptyTree(struct TTree* pTree);
 int SizeOfTree(struct TTree* pTree);
 TIteratorTree NextInTree(TIteratorTree it);
 TIteratorTree PreviousInTree(TIteratorTree it);
-void InsertInTree(struct TTree* pTree, struct TPairPtrSize* data);
+void InsertInTree(struct TTree* pTree, const TValueTree* data);
 TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it);
 void EraseKeysInTree(struct TTree* pTree, TKeyTree k);
 TIteratorTree UpperBoundInTree(struct TTree* pTree, TKeyTree k);
