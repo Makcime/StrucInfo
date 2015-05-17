@@ -221,91 +221,98 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
     TIteratorTree next = NextInTree(it);
 	TIteratorTree prev = pTree->_header;
     
-	if(iter!=pTree->_header->pLeft)
+    // Si je ne suis pas le plus petit dans l'arbre
+	if(it != pTree->_header->pLeft)
     	prev = PreviousInTree(it);
 
-    // 1. si it n'a pas d'enfant
-    if( (it->pLeft == NULL && it->pRight == NULL) || it->pRight->pRight == it){
+    /* *** 1. si je n'ai pas d'enfant *** */
+    // if( (it->pLeft == NULL && it->pRight == NULL) || it->pRight->pRight == it){
+    if(!it->pLeft && !it->pRight){
+
+    	//cas où il ne reste que le root!
+		if(pTree->_header->pLeft==pTree->_header->pRight){ 
+			pTree->_header->pParent = pTree->_header;
+			pTree->_header->pLeft = pTree->_header;
+			pTree->_header->pRight = pTree->_header;			
+		} 
+
+		// Je suis un enfant de gauche   	
         if(it->pParent->pLeft == it){ 
-            it->pParent->pLeft = NULL;
+            it->pParent->pLeft = NULL; // effacer l'enfant de gauche de mon parent
+            // mettre a jour le debut d'arbre
             if (pTree->_header->pLeft == it)
                 pTree->_header->pLeft = next;
         }
+
+		// Je suis un enfant de droite   	
         else if (it->pParent->pRight == it){
-            it->pParent->pRight = NULL; 
+            it->pParent->pRight = NULL; // effacer l'enfant de droite de mon parent
+            // mettre a jour la fin d'arbre
             if (pTree->_header->pRight == it)
                 pTree->_header->pRight = prev;
         }
-        else{   // il ne reste que le Root dans l arbre
-            it->pParent->pParent = NULL;
-            it->pParent->pLeft = it->pParent;
-            it->pParent->pRight = it->pParent;
-        }                
     }
-    // 2. si it n'a pas un fils droit
-    else if(!it->pRight){
-        // on relie le fils gauche de it au pere de it               
-        if(it->pParent->pLeft == it){ 
-            it->pParent->pLeft = it->pLeft; 
-        }
-        else if(it->pParent->pRight == it){ 
-            it->pParent->pRight = it->pLeft;
-        }else{  // it est le Root
-            it->pParent->pParent = it->pLeft;
-        }
-        it->pLeft->pParent = it->pParent;        
+    
+    /* *** 2. si j'ai uniquement un fils droit *** */
+    else if(it->pRight && !it->pLeft){
+
+    	// Si je suis le root
+    	if(it->pParent->pParent == it){
+    		it->pParent->pParent = it->pRight; // le parent du header node devient mon fils droit
+    		it->pRight->pParent = it->pParent; // le parent de mon fils droit devien le header
+    	}
+    	// Sinon si je suis un enfant de gauche
+    	else if(it->pParent->pLeft == it){
+    		it->pParent->pLeft = it->pRight; // le fils gauche de mon parent devient mon fils droit
+    		it->pRight->pParent = it->pParent; // le parent de mon fils droit devient mon parent
+    	}
+    	// Sinon si je suis un enfant de droite
+    	else if(it->pParent->pRight == it){
+    		it->pParent->pRight = it->pRight; // le fils gauche de mon parent devient mon fils droit
+    		it->pRight->pParent = it->pParent; // le parent de mon fils droit devient mon parent
+    	}
+
+        // mettre a jour le debut d'arbre
+        if (pTree->_header->pLeft == it)
+            pTree->_header->pLeft = next;
     }
-    // 3. si it a un fils droit
+
+    /* *** 3. si j'ai uniquement un fils gauche *** */
+    else if(it->pLeft && !it->pRight){
+
+    	// Si je suis le root
+    	if(it->pParent->pParent == it){
+    		it->pParent->pParent = it->pLeft; // le parent du header node devient mon fils gauche
+    		it->pLeft->pParent = it->pParent; // le parent de mon fils gauche devient le header
+    	}
+    	// Sinon si je suis un enfant de gauche
+    	else if(it->pParent->pLeft == it){
+    		it->pParent->pLeft = it->pLeft; // le fils gauche de mon parent devient mon fils gauche
+    		it->pLeft->pParent = it->pParent; // le parent de mon fils gauche devient mon parent
+    	}
+    	// Sinon si je suis un enfant de droite
+    	else if(it->pParent->pRight == it){
+    		it->pParent->pRight = it->pLeft; // le fils gauche de mon parent devient mon fils droit
+    		it->pLeft->pParent = it->pParent; // le parent de mon fils gauche mon parent
+    	}
+
+        // mettre a jour la fin d'arbre
+        if (pTree->_header->pRight == it)
+            pTree->_header->pRight = prev;
+    }
+    /* *** 4. Sinon je possède deux fils*** */
     else{
-        // on remplace it par son "suivant" 
-        if(!it->pRight->pLeft){
-        	next->pLeft = it->pLeft;
+    	// mon suivant prends ma place
+    	it->pLeft->pParent = next; 
+		next->pLeft = it->pLeft;
+		it->pRight->pParent = it->pParent;
 
-        	if (it->pLeft)
-        		it->pLeft->pParent = next;
-
-        	next->pParent = it->pParent;
-
-	        if(it->pParent->pLeft == it){ 
-	            it->pParent->pLeft = next;            
-	        }
-	        else if(it->pParent->pRight == it){ 
-	            it->pParent->pRight = next;
-	        }    
-	        else{ // it est le Root
-	            it->pParent->pParent = next;            
-	        }
-        }else{
-            next->pParent->pLeft = next->pRight;
-            next->pRight = it->pRight;
-            next->pLeft = it->pLeft;
-            next->pParent = it->pParent;  
-
-	        if(it->pParent->pLeft == it){ 
-	            it->pParent->pLeft = next;            
-	        }
-	        else if(it->pParent->pRight == it){ 
-	            it->pParent->pRight = next;
-	        }    
-	        else{ // it est le Root
-	            it->pParent->pParent = next;            
-	        }      
-        }
-
-
-        // next->pParent = it->pParent;
-        // 3.1. si fils droit de it n'a pas de fils gauche
-        // if(next->pLeft != NULL){
-        //     next->pLeft = it->pLeft;
-        //     it->pLeft->pParent = it->pRight;
-        // }
-        // 3.2. si fils droit de it a un fils gauche
-        // else{
-        //     next->pParent->pLeft = next->pRight;
-        //     next->pRight = it->pRight;
-        //     next->pLeft = it->pLeft;
-        //     next->pParent = it->pParent;
-        // }
+		if(it == it->pParent->pParent){ // si je suis le root
+			it->pParent->pParent = it->pRight;
+		}else if(it == it->pParent->pLeft) // sinon si je suis un fils gauche
+			it->pParent->pLeft = it->pRight;
+		else	// sinon je suis un fils droit
+			it->pParent->pRight = it->pRight;
     }
 
     if (pTree->_header->pLeft == it)
@@ -315,7 +322,7 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
         
     // Deallocate(pTree->_pAllocator,it);
     pTree->_nodeCount--;
-    printf("begin = (%x , %d)\n", GetPDataInTree(BeginOfTree(pTree))->ptr, GetPDataInTree(BeginOfTree(pTree))->size);
+    // printf("begin = (%x , %d)\n", GetPDataInTree(BeginOfTree(pTree))->ptr, GetPDataInTree(BeginOfTree(pTree))->size);
     // printf("next = (%x , %d)\n", GetPDataInTree(next)->ptr, GetPDataInTree(next)->size);
     // printf("parent de next = (%x , %d)\n", GetPDataInTree(next->pParent)->ptr, GetPDataInTree(next->pParent)->size);
     return next;
