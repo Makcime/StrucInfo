@@ -65,15 +65,13 @@ static FCallbackOnValue __fCallbackPostfix = 0;
 /* ------------------------------------------------------------------------- */
 struct TTree* CreateTree(TKeyOf __KeyOf, TComp __KeyCompare){
 	
-	struct TTree* tree = malloc(sizeof(struct TTree));
+	struct TTree* tree = (struct TTree*) malloc(sizeof(struct TTree));
 
 	tree->_KeyOf = __KeyOf;
 	tree->_KeyCompare = __KeyCompare;
-
-	tree->_pAllocator = CreateAllocator(sizeof(_TNode));
-
 	tree->_nodeCount = 0;
 
+	tree->_pAllocator = CreateAllocator(sizeof(_TNode));
 	tree->_header = _CreateHeaderNode(tree->_pAllocator);
 
 	return tree;
@@ -96,17 +94,13 @@ TIteratorTree BeginOfTree(struct TTree* pTree){
 
 /* ------------------------------------------------------------------------- */
 TIteratorTree EndOfTree(struct TTree* pTree){
-	// return pTree->_header->pRight->pRight; 
-	// return pTree->_header->pRight; 
 	return pTree->_header; 
 }
 
 /* ------------------------------------------------------------------------- */
 bool IsEmptyTree(struct TTree* pTree){
-	if(pTree->_nodeCount <= 0)
-		return true;
-	else
-		return false;
+	if(pTree->_nodeCount <= 0) return true;
+	else return false;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -118,40 +112,85 @@ int SizeOfTree(struct TTree* pTree){
 TIteratorTree NextInTree(TIteratorTree it){
 	TIteratorTree pNext = it;
 
-	if(it->pRight){
-		pNext = it->pRight;
-		while(pNext->pLeft && pNext->pParent->pParent != pNext)
+	// Si pas de fils droit, on remontre dans l'arbre 
+	// jusqu'à être le fils gauche de mon parent
+	// ou si on est Root
+	if (!pNext->pRight){
+		while ((pNext != pNext->pParent->pLeft) && (pNext!=pNext->pParent->pParent)) { 	
+			pNext = pNext->pParent;
+		}
+		return pNext->pParent;
+		
+	}else{ 	//prendre le plus à gauche du fils droit
+		pNext = pNext->pRight;
+		// tant que j'ai un fils de gauche et que l'arbre n'est pas vide
+		while (pNext->pLeft && pNext->pLeft != pNext) {
+		// while (pNext->pLeft && pNext->pLeft->pParent) {
 			pNext = pNext->pLeft;
-	}else{
-		while(pNext->pParent->pParent != pNext )
-			if(pNext->pParent->pLeft == pNext)
-				return pNext->pParent;
-			else
-				pNext = pNext->pParent;
+		}
+		return pNext;
 	}
-	return pNext;
+
+	// if(it->pRight){
+	// 	pNext = it->pRight;
+		// while(pNext->p/Left && pNext->pParent->pParent != pNext)
+	// 		pNext = pNext->pLeft;
+	// }else{
+	// 	while(pNext->pParent->pParent != pNext )
+	// 		if(pNext->pParent->pLeft == pNext)
+	// 			return pNext->pParent;
+	// 		else
+	// 			pNext = pNext->pParent;
+	// }
+	// return pNext;
 }
 
 /* ------------------------------------------------------------------------- */
 TIteratorTree PreviousInTree(TIteratorTree it){
 	TIteratorTree pPrev = it;
 
-	if(GetPDataInTree(it)->ptr == NULL){
-		pPrev = it->pRight;
-	}
-	else if(it->pLeft){
-		pPrev = it->pLeft;
-		while(pPrev->pRight)
-			pPrev = pPrev->pRight;
-	}
-	else{
-		while(pPrev->pParent->pParent != pPrev){
-			if(pPrev->pParent->pRight == pPrev)
-				return pPrev->pParent;
-			else
-				pPrev = pPrev->pParent;
+	printf("iterateur : (%02x,%02d)", GetPDataInTree(it)->ptr, GetPDataInTree(it)->size);
+
+	// Suis-je le header Node ?
+
+	// suis-je le parent de de mon parent?
+	// et ai-je un fils de droite?
+	if((it->pParent->pParent == it) && it->pRight != NULL){
+		// mon fils droit a-t-il un fils droit?
+		if(!it->pRight->pRight){
+			if((it->pRight == it->pParent)){ // si mon fils droit est mon parent
+				pPrev = it->pRight;
+	printf("1 previous : (%02x,%02d) \n", GetPDataInTree(pPrev)->ptr, GetPDataInTree(pPrev)->size);
+				return pPrev;
+				// alors je suis le header et le max est le root
+			}else if(it->pRight->pParent != it){ // si je ne suis pas le parent de mon fils droit
+				pPrev = it->pRight;	// alors je suis le header
+	printf("2 previous : (%02x,%02d) \n", GetPDataInTree(pPrev)->ptr, GetPDataInTree(pPrev)->size);
+				return pPrev;	// alors je suis le header
+			} // sinon je suis le root
+			else{
+			}
 		}
 	}
+
+	// Dans tout les autres cas je suis un noeud dans l'arbre
+	// else if(pPrev->pLeft){ // si j'ai un fils gauche
+	if(pPrev->pLeft){ // si j'ai un fils gauche
+		pPrev = pPrev->pLeft;
+		while(pPrev->pRight) // prendre le plus à droite de ce fils gauche
+			pPrev = pPrev->pRight;
+		// return pPrev;
+	}
+	else{ // sinon relonter dans l'arbre
+		while(pPrev->pParent->pRight != pPrev){ // jusquà être le fils droit de mon parent
+			pPrev = pPrev->pParent; //on remonte dans l'arbre
+		}
+		// return pPrev->pParent;
+		pPrev = pPrev->pParent;
+	}
+
+	printf("3 previous : (%02x,%02d) \n", GetPDataInTree(pPrev)->ptr, GetPDataInTree(pPrev)->size);
+	// getchar();
 	return pPrev;
 }
 
@@ -165,25 +204,21 @@ void InsertInTree(struct TTree* pTree, const TValueTree* data){
 
 	int side = 0;
 
+	// si l'arbre n'est pa vide :
 	if(_Root(pTree)){
 		next = _Root(pTree);
-		// printf("Root =  %02x\n", GetPDataInTree(next)->ptr);
-		parent = next;
+		printf("Root =  %02x\n", GetPDataInTree(next)->ptr);
+		// parent = next;
 		while(next && next != pTree->_header){
 			parent = next;
 			if(pTree->_KeyCompare(pTree->_KeyOf(&node->value), pTree->_KeyOf(&next->value))){
-				next = parent->pLeft;
-				side = 1;
-
+				next = parent->pLeft; side = 1;
 			}else{
-				next = parent->pRight;
-				side = 2;
-				// if (next == pTree->_header)
-					// next = NULL;
+				next = parent->pRight; side = 2;
 			}
 		}
 		node->pParent = parent;
-		if (side==1){
+		if ( side == 1 ){
 			parent->pLeft = node;
 			// printf("fils de gauche de pute de %02x\n", GetPDataInTree(parent)->ptr);
 		}
@@ -196,23 +231,24 @@ void InsertInTree(struct TTree* pTree, const TValueTree* data){
 					pTree->_KeyOf(&pTree->_header->pLeft->value))){
 			// printf("%02x plus petit %02x \n", pTree->_KeyOf(&node->value), pTree->_KeyOf(&pTree->_header->pLeft->value));
 			pTree->_header->pLeft = node;
-		}else if(pTree->_KeyCompare(pTree->_KeyOf(&pTree->_header->pRight->value),
-					pTree->_KeyOf(&node->value))){
+		}
+		if(!pTree->_KeyCompare(pTree->_KeyOf(&node->value), 
+				pTree->_KeyOf(&pTree->_header->pRight->value))){
 			// printf("%02x plus grand %02x \n", pTree->_KeyOf(&node->value), pTree->_KeyOf(&pTree->_header->pRight->value));
 			pTree->_header->pRight = node;
-			node->pRight = pTree->_header;
+			// node->pRight = pTree->_header;
 		}
 
 	}else{
+		printf("creation du root node\n");
 		pTree->_header->pParent = node;
 		pTree->_header->pLeft = node;
 		pTree->_header->pRight = node;
 		node->pParent = pTree->_header;
 		// node->pRight = pTree->_header;
-
-
 	}
 	pTree->_nodeCount++;
+	// getchar();
 }
 
 /* ------------------------------------------------------------------------- */
@@ -230,8 +266,10 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
     if(!it->pLeft && !it->pRight){
 
     	//cas où il ne reste que le root!
-		if(pTree->_header->pLeft==pTree->_header->pRight){ 
-			pTree->_header->pParent = pTree->_header;
+		// if(pTree->_header->pLeft == pTree->_header->pRight){ 
+		if(pTree->_nodeCount == 1){ 
+			// printf("cas où il ne reste que le root!\n");
+			pTree->_header->pParent = NULL;
 			pTree->_header->pLeft = pTree->_header;
 			pTree->_header->pRight = pTree->_header;			
 		} 
@@ -248,8 +286,10 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
         else if (it->pParent->pRight == it){
             it->pParent->pRight = NULL; // effacer l'enfant de droite de mon parent
             // mettre a jour la fin d'arbre
-            if (pTree->_header->pRight == it)
+            if (pTree->_header->pRight == it){
                 pTree->_header->pRight = prev;
+            }
+
         }
     }
     
@@ -259,7 +299,7 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
     	// Si je suis le root
     	if(it->pParent->pParent == it){
     		it->pParent->pParent = it->pRight; // le parent du header node devient mon fils droit
-    		it->pRight->pParent = it->pParent; // le parent de mon fils droit devien le header
+    		it->pRight->pParent = it->pParent; // le parent de mon fils droit devient le header
     	}
     	// Sinon si je suis un enfant de gauche
     	else if(it->pParent->pLeft == it){
@@ -297,8 +337,9 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
     	}
 
         // mettre a jour la fin d'arbre
-        if (pTree->_header->pRight == it)
+        if (pTree->_header->pRight == it){
             pTree->_header->pRight = prev;
+        }
     }
     /* *** 4. Sinon je possède deux fils*** */
     else{
@@ -317,23 +358,42 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
 
     if (pTree->_header->pLeft == it)
         pTree->_header->pLeft = next;
-    if (pTree->_header->pRight == it)
-        pTree->_header->pRight = prev;
+    if (pTree->_header->pRight == it){
+        prev->pRight = pTree->_header; 
+    }
         
     // Deallocate(pTree->_pAllocator,it);
     pTree->_nodeCount--;
     // printf("begin = (%x , %d)\n", GetPDataInTree(BeginOfTree(pTree))->ptr, GetPDataInTree(BeginOfTree(pTree))->size);
     // printf("next = (%x , %d)\n", GetPDataInTree(next)->ptr, GetPDataInTree(next)->size);
     // printf("parent de next = (%x , %d)\n", GetPDataInTree(next->pParent)->ptr, GetPDataInTree(next->pParent)->size);
+    Deallocate(pTree->_pAllocator, it);
     return next;
 }
 
 /* ------------------------------------------------------------------------- */
 void EraseKeysInTree(struct TTree* pTree, TKeyTree k){
+
+	TIteratorTree it = BeginOfTree(pTree), end = EndOfTree(pTree);
+
+	while (it != end) {
+
+		if(!pTree->_KeyCompare(k, pTree->_KeyOf(&it->value)) 
+			&& !pTree->_KeyCompare(pTree->_KeyOf(&it->value), k))
+			it = EraseInTree(pTree, it);
+		else
+			it = NextInTree(it);
+	}
+	// return SizeOfTree(pTree);
 	return;
 }
 
 void EraseSequenceInTree(struct TTree* pTree, TIteratorTree first, TIteratorTree last){
+	TIteratorTree it = first;
+	while (it != last) {
+		it = EraseInTree(pTree, it);
+	}
+	// return it;
 	return;
 }
 
