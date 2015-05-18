@@ -38,6 +38,11 @@ TIteratorTree LowerBoundInTree(struct TTree* pTree, TKeyTree k);
 void WalkTree(struct TTree* pTree, FCallbackOnValue cb);
 void EraseSequenceInTree(struct TTree* pTree, TIteratorTree first, TIteratorTree last);
 
+/* Red Black trees Functions ----------------------------------------------- */
+void RotateLeft(struct TTree* pTree, TIteratorTree x);
+void RotateRight(struct TTree* pTree, TIteratorTree it);
+void RedBlackFixUp(struct TTree* pTree, TIteratorTree it);
+
 /* ------------------------------------------------------------------------- */
 void __ShowPrefixTree(struct TTree* pTree, FCallbackOnValue fShowValue,
                       int isCallOnLeave);

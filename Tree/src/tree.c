@@ -614,3 +614,15 @@ static _TPNode _Root(struct TTree* pTree) {
 }
 
 /* ------------------------------------------------------------------------- */
+/* Red Black trees Functions ----------------------------------------------- */
+/* ------------------------------------------------------------------------- */
+
+void RotateLeft(struct TTree* pTree, TIteratorTree x){
+	return;
+}
+void RotateRight(struct TTree* pTree, TIteratorTree it){
+	return;
+}
+void RedBlackFixUp(struct TTree* pTree, TIteratorTree it){
+	return;
+}
