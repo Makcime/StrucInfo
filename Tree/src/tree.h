@@ -40,12 +40,12 @@ void EraseSequenceInTree(struct TTree* pTree, TIteratorTree first, TIteratorTree
 
 /* ------------------------------------------------------------------------- */
 void __ShowPrefixTree(struct TTree* pTree, FCallbackOnValue fShowValue,
-		int isCallOnLeave);
+                      int isCallOnLeave);
 void __ShowPostfixTree(struct TTree* pTree, FCallbackOnValue fShowValue,
-		int isCallOnLeave);
+                       int isCallOnLeave);
 void __ShowInfixTree(struct TTree* pTree, FCallbackOnValue fShowValue,
-		int isCallOnLeave);
+                     int isCallOnLeave);
 void __ShowLevelTree(struct TTree* pTree, FCallbackOnValue fShowValue,
-		int width);
+                     int width);
 /* ------------------------------------------------------------------------- */
 #endif /* TREE_H_ */
