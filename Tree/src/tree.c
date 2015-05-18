@@ -130,26 +130,11 @@ TIteratorTree NextInTree(TIteratorTree it){
 		}
 		return pNext;
 	}
-
-	// if(it->pRight){
-	// 	pNext = it->pRight;
-		// while(pNext->p/Left && pNext->pParent->pParent != pNext)
-	// 		pNext = pNext->pLeft;
-	// }else{
-	// 	while(pNext->pParent->pParent != pNext )
-	// 		if(pNext->pParent->pLeft == pNext)
-	// 			return pNext->pParent;
-	// 		else
-	// 			pNext = pNext->pParent;
-	// }
-	// return pNext;
 }
 
 /* ------------------------------------------------------------------------- */
 TIteratorTree PreviousInTree(TIteratorTree it){
 	TIteratorTree pPrev = it;
-
-	printf("iterateur : (%02x,%02d)", GetPDataInTree(it)->ptr, GetPDataInTree(it)->size);
 
 	// Suis-je le header Node ?
 
@@ -160,12 +145,10 @@ TIteratorTree PreviousInTree(TIteratorTree it){
 		if(!it->pRight->pRight){
 			if((it->pRight == it->pParent)){ // si mon fils droit est mon parent
 				pPrev = it->pRight;
-	printf("1 previous : (%02x,%02d) \n", GetPDataInTree(pPrev)->ptr, GetPDataInTree(pPrev)->size);
 				return pPrev;
 				// alors je suis le header et le max est le root
 			}else if(it->pRight->pParent != it){ // si je ne suis pas le parent de mon fils droit
 				pPrev = it->pRight;	// alors je suis le header
-	printf("2 previous : (%02x,%02d) \n", GetPDataInTree(pPrev)->ptr, GetPDataInTree(pPrev)->size);
 				return pPrev;	// alors je suis le header
 			} // sinon je suis le root
 			else{
@@ -189,8 +172,6 @@ TIteratorTree PreviousInTree(TIteratorTree it){
 		pPrev = pPrev->pParent;
 	}
 
-	printf("3 previous : (%02x,%02d) \n", GetPDataInTree(pPrev)->ptr, GetPDataInTree(pPrev)->size);
-	// getchar();
 	return pPrev;
 }
 
@@ -198,8 +179,6 @@ TIteratorTree PreviousInTree(TIteratorTree it){
 void InsertInTree(struct TTree* pTree, const TValueTree* data){
 
 	_TPNode node = _CreateNode(data, NULL, NULL, NULL, _ctBlack, pTree->_pAllocator);
-	// printf("(%02x,%02d) ", GetPDataInTree(node)->ptr, GetPDataInTree(node)->size);
-	printf("(%02d,%02d) \n", pTree->_KeyOf(&node->value), GetPDataInTree(node)->size);
 	TIteratorTree next, parent;
 
 	int side = 0;
@@ -207,8 +186,6 @@ void InsertInTree(struct TTree* pTree, const TValueTree* data){
 	// si l'arbre n'est pa vide :
 	if(_Root(pTree)){
 		next = _Root(pTree);
-		printf("Root =  %02x\n", GetPDataInTree(next)->ptr);
-		// parent = next;
 		while(next && next != pTree->_header){
 			parent = next;
 			if(pTree->_KeyCompare(pTree->_KeyOf(&node->value), pTree->_KeyOf(&next->value))){
@@ -220,27 +197,21 @@ void InsertInTree(struct TTree* pTree, const TValueTree* data){
 		node->pParent = parent;
 		if ( side == 1 ){
 			parent->pLeft = node;
-			// printf("fils de gauche de pute de %02x\n", GetPDataInTree(parent)->ptr);
 		}
 		else{
 			parent->pRight = node;
-			// printf("fils de pd de droite %02x\n", GetPDataInTree(parent)->ptr);
 		}
 
 		if(pTree->_KeyCompare(pTree->_KeyOf(&node->value), 
 					pTree->_KeyOf(&pTree->_header->pLeft->value))){
-			// printf("%02x plus petit %02x \n", pTree->_KeyOf(&node->value), pTree->_KeyOf(&pTree->_header->pLeft->value));
 			pTree->_header->pLeft = node;
 		}
 		if(!pTree->_KeyCompare(pTree->_KeyOf(&node->value), 
 				pTree->_KeyOf(&pTree->_header->pRight->value))){
-			// printf("%02x plus grand %02x \n", pTree->_KeyOf(&node->value), pTree->_KeyOf(&pTree->_header->pRight->value));
 			pTree->_header->pRight = node;
-			// node->pRight = pTree->_header;
 		}
 
 	}else{
-		printf("creation du root node\n");
 		pTree->_header->pParent = node;
 		pTree->_header->pLeft = node;
 		pTree->_header->pRight = node;
@@ -248,7 +219,6 @@ void InsertInTree(struct TTree* pTree, const TValueTree* data){
 		// node->pRight = pTree->_header;
 	}
 	pTree->_nodeCount++;
-	// getchar();
 }
 
 /* ------------------------------------------------------------------------- */
@@ -362,12 +332,9 @@ TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it){
         prev->pRight = pTree->_header; 
     }
         
-    // Deallocate(pTree->_pAllocator,it);
     pTree->_nodeCount--;
-    // printf("begin = (%x , %d)\n", GetPDataInTree(BeginOfTree(pTree))->ptr, GetPDataInTree(BeginOfTree(pTree))->size);
-    // printf("next = (%x , %d)\n", GetPDataInTree(next)->ptr, GetPDataInTree(next)->size);
-    // printf("parent de next = (%x , %d)\n", GetPDataInTree(next->pParent)->ptr, GetPDataInTree(next->pParent)->size);
     Deallocate(pTree->_pAllocator, it);
+
     return next;
 }
 
@@ -469,8 +436,6 @@ void __ShowPostfixTree(struct TTree* pTree, FCallbackOnValue fShowValue,
 void __ShowLevelTree(struct TTree* pTree, FCallbackOnValue fShowValue,
 		int width) {
 	int deep = __GetRecurDeep(pTree->_header->pParent);
-	printf("deep = %d \n", deep);
-	getchar();
 	int nodesInLevel, level, number;
 	int halfSpaceLength;
 	int cc, chs;
