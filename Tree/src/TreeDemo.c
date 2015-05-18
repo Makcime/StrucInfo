@@ -153,7 +153,8 @@ void EraseFromKeys(struct TTree* pTree, void* from, void* to) {
 		before = SizeOfTree(pTree);
 		EraseKeysInTree(pTree, k);
 		after = SizeOfTree(pTree);
-		printf("Erased for key %p : %3d \t", k, before - after);
+		printf("Erased for key %08X : %3d \t", k, before - after);
+		// printf("Erased for key %p : %3d \t", k, before - after);
 	}
 }
 
@@ -173,7 +174,8 @@ void ShowKeys(struct TTree* pTree, void* from, void* to) {
 	for (k = from; k < to; k = (char*) k + 1) {
 		nk = CountNbrOfKeys(pTree, k);
 		if (nk)
-			printf("Number of key %p :%3d \t", k, nk);
+			printf("Number of key %08X :%3d \t", k, nk);
+			// printf("Number of key %p :%3d \t", k, nk);
 	}
 	printf("\n");
 }
