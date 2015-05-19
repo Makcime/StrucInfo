@@ -22,7 +22,7 @@ typedef int (*TCompSet)(TKeySet, TKeySet);
 struct TSet* CreateSet(TComp __KeyCompare);
 int IsEmptySet(struct TSet* pSet);
 int SizeOfSet(struct TSet* pSet);
-TIteratorSet BeginOfSet(struct TSet* pSet);	
+TIteratorSet BeginOfSet(struct TSet* pSet);
 TIteratorSet EndOfSet(struct TSet* pSet);
 TIteratorSet NextInSet(TIteratorSet iter);
 TValueSet* GetPDataInSet(TIteratorSet iter);
