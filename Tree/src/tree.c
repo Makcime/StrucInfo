@@ -535,10 +535,7 @@ static void _RecurInfix(_TPNode iter) {
         _fCallbackInfix(NULL);
 
     if(iter)
-        if(iter->pRight && iter->pRight->pRight != iter)
             _RecurInfix(iter->pRight);
-        else if (_isCallOnLeave)
-            _RecurInfix(NULL);
 
     return;
 
@@ -549,17 +546,14 @@ static void __RecurPrefix(_TPNode iter) {
 
     if(iter)
         __fCallbackPrefix(&iter->value);
-    else
+    else if (_isCallOnLeave)
         __fCallbackPrefix(NULL);
 
     if(iter)
         __RecurPrefix(iter->pLeft);
 
     if(iter)
-        if(iter->pRight && iter->pRight->pRight != iter)
             __RecurPrefix(iter->pRight);
-        else
-            __RecurPrefix(NULL);
 
     return;
 }
@@ -571,14 +565,11 @@ static void __RecurPostfix(_TPNode iter) {
         __RecurPostfix(iter->pLeft);
 
     if(iter)
-        if(iter->pRight && iter->pRight->pRight != iter)
             __RecurPostfix(iter->pRight);
-        else
-            __RecurPostfix(NULL);
 
     if(iter)
         __fCallbackPostfix(&iter->value);
-    else
+    else if (_isCallOnLeave)
         __fCallbackPostfix(NULL);
     return;
 }
@@ -693,11 +684,9 @@ void RedBlackInsert( struct TTree* pTree, const TValueTree* data ) {
     int debug = 0;
     /* Insert in the tree in the usual way */
 	x = RegInsertInTree(pTree, data);
-	printf("debug %d\n", debug++);
 
     /* Now restore the red-black property */
     if(_Root(pTree)){
-		printf("debug %d\n", debug++);
 	    while ( (x != _Root(pTree)) && (x->pParent->color == _ctRed) ) {
 	       if ( x->pParent == x->pParent->pParent->pLeft ) {
 	           /* If x's pParent is a left, y is x's right 'uncle' */
@@ -755,7 +744,6 @@ void RedBlackInsert( struct TTree* pTree, const TValueTree* data ) {
 	}
 
     /* Colour the root _ctBlack */
-		printf("debug %d\n", debug++);
     _Root(pTree)->color = _ctBlack;
 }
 
