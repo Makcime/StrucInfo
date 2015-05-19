@@ -63,21 +63,17 @@ TValueSet* GetPDataInSet(TIteratorSet iter){
 /* ------------------------------------------------------------------------- */
 bool AddInSet(struct TSet* pSet, const TValueSet* val){
 	if(IsElementOfSet(pSet, val) == false){
-		// printf("alors je l'ajoute\n\n");
 		InsertInTree(pSet->pTree, val);
 		return true;	
 	}
-	// printf("je ne fais rien \n\n", GetChar(val));
 	return false;
 }
 /* ------------------------------------------------------------------------- */
 bool RemoveFromSet(struct TSet* pSet, const TValueSet* val){
 	if(IsElementOfSet(pSet, val) == true){
-		// printf("alors je l'enleve\n\n", GetChar(val));
 		EraseInTree(pSet->pTree, LowerBoundInTree(pSet->pTree, val));
 		return true;	
 	}
-	// printf("je ne fais rien \n\n", GetChar(val));
 	return false;
 }
 /* ------------------------------------------------------------------------- */
@@ -85,23 +81,18 @@ bool IsElementOfSet(struct TSet* pSet , const TValueSet* val){
 
 	TIteratorTree LBIter = LowerBoundInTree(pSet->pTree, GetChar(val));
 
-	// printf("it %c - val %c\n", GetChar(GetPDataInTree(LBIter)), GetChar(val));
 
 	if(LBIter == EndOfTree(pSet->pTree)){
-		// printf("\n%c n'est pas dans la liste, ", GetChar(val));
 		return false;
 	}
 
 	if (pSet->_KeyCompare(GetChar(val), GetChar(GetPDataInTree(LBIter)))){
-		// printf("\n%c n'est pas dans la liste, ", GetChar(val));
 		return false;
 	}
 	else if(pSet->_KeyCompare(GetChar(GetPDataInTree(LBIter)), GetChar(val))){
-		// printf("\n%c n'est pas dans la liste, ", GetChar(val));
 		return false;
 	} // La data dans le lowerBound est egale à la data dans val
 	else{
-		// printf("\n%c est dans la liste, ", GetChar(val));
 		return true;
 	}	
 
