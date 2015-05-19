@@ -174,9 +174,9 @@ TIteratorTree PreviousInTree(TIteratorTree it) {
 }
 
 /* ------------------------------------------------------------------------- */
-void InsertInTree(struct TTree* pTree, const TValueTree* data){
-	// RegInsertInTree(pTree, data);
-	RedBlackInsert(pTree, data);
+void InsertInTree(struct TTree* pTree, const TValueTree* data) {
+    // RegInsertInTree(pTree, data);
+    RedBlackInsert(pTree, data);
 
 }
 /* ------------------------------------------------------------------------- */
@@ -535,7 +535,7 @@ static void _RecurInfix(_TPNode iter) {
         _fCallbackInfix(NULL);
 
     if(iter)
-            _RecurInfix(iter->pRight);
+        _RecurInfix(iter->pRight);
 
     return;
 
@@ -553,7 +553,7 @@ static void __RecurPrefix(_TPNode iter) {
         __RecurPrefix(iter->pLeft);
 
     if(iter)
-            __RecurPrefix(iter->pRight);
+        __RecurPrefix(iter->pRight);
 
     return;
 }
@@ -565,7 +565,7 @@ static void __RecurPostfix(_TPNode iter) {
         __RecurPostfix(iter->pLeft);
 
     if(iter)
-            __RecurPostfix(iter->pRight);
+        __RecurPostfix(iter->pRight);
 
     if(iter)
         __fCallbackPostfix(&iter->value);
@@ -618,7 +618,7 @@ static _TPNode _Root(struct TTree* pTree) {
 /* ------------------------------------------------------------------------- */
 
 // make a right-leaning link lean to the left
-void RotateLeft(struct TTree* pTree, TIteratorTree x){
+void RotateLeft(struct TTree* pTree, TIteratorTree x) {
     TIteratorTree y;
     y = x->pRight;
     /* Turn y's left sub-tree into x's pRight sub-tree */
@@ -630,9 +630,9 @@ void RotateLeft(struct TTree* pTree, TIteratorTree x){
     /* Set the pParent to point to y instead of x */
     /* First see whether we're at the root */
     if ( x->pParent->pParent == x ) {
-    	 x->pParent->pParent = y;
+        x->pParent->pParent = y;
     }
-    else{
+    else {
         if ( x == (x->pParent)->pLeft )
             /* x was on the pLeft of its pParent */
             x->pParent->pLeft = y;
@@ -642,12 +642,12 @@ void RotateLeft(struct TTree* pTree, TIteratorTree x){
     }
     /* Finally, put x on y's pLeft */
     y->pLeft = x;
-    x->pParent = y;	
+    x->pParent = y;
     return;
 }
 
 // make a Left-leaning link lean to the right
-void RotateRight(struct TTree* pTree, TIteratorTree x){
+void RotateRight(struct TTree* pTree, TIteratorTree x) {
     TIteratorTree y;
     y = x->pLeft;
     /* Turn y's right sub-tree into x's pLeft sub-tree */
@@ -659,9 +659,9 @@ void RotateRight(struct TTree* pTree, TIteratorTree x){
     /* Set the pParent to point to y instead of x */
     /* First see whether we're at the root */
     if ( x->pParent->pParent == x ) {
-    	 x->pParent->pParent = y;
+        x->pParent->pParent = y;
     }
-    else{
+    else {
         if ( x == (x->pParent)->pRight )
             /* x was on the pRight of its pParent */
             x->pParent->pRight = y;
@@ -671,77 +671,77 @@ void RotateRight(struct TTree* pTree, TIteratorTree x){
     }
     /* Finally, put x on y's pRight */
     y->pRight = x;
-    x->pParent = y;	
+    x->pParent = y;
     return;
 }
 
-void RedBlackFixUp(struct TTree* pTree, TIteratorTree it){
-	return;
+void RedBlackFixUp(struct TTree* pTree, TIteratorTree it) {
+    return;
 }
 
 void RedBlackInsert( struct TTree* pTree, const TValueTree* data ) {
     TIteratorTree x, y;
     int debug = 0;
     /* Insert in the tree in the usual way */
-	x = RegInsertInTree(pTree, data);
+    x = RegInsertInTree(pTree, data);
 
     /* Now restore the red-black property */
-    if(_Root(pTree)){
-	    while ( (x != _Root(pTree)) && (x->pParent->color == _ctRed) ) {
-	       if ( x->pParent == x->pParent->pParent->pLeft ) {
-	           /* If x's pParent is a left, y is x's right 'uncle' */
-	           y = x->pParent->pParent->pRight;
-	           if (y && y->color == _ctRed ) {
-	               /* case 1 - change the colors */
-	               x->pParent->color = _ctBlack;
-	               y->color = _ctBlack;
-	               x->pParent->pParent->color = _ctRed;
-	               /* Move x up the tree */
-	               x = x->pParent->pParent;
-	               }
-	           else {
-	               /* y is a _ctBlack node */
-	               if ( x == x->pParent->pRight ) {
-	                   /* and x is to the right */ 
-	                   /* case 2 - move x up and rotate */
-	                   x = x->pParent;
-	                   RotateLeft( pTree, x );
-	                   }
-	               /* case 3 */
-	               x->pParent->color = _ctBlack;
-	               x->pParent->pParent->color = _ctRed;
-	               RotateRight( pTree, x->pParent->pParent );
-	               }
-	           }
-	       else {
-	           /* repeat the "if" part with right and left
-	              exchanged */
-	           y = x->pParent->pParent->pLeft;
-	           if (y && y->color == _ctRed ) {
-	               /* case 1 - change the colors */
-	               x->pParent->color = _ctBlack;
-	               y->color = _ctBlack;
-	               x->pParent->pParent->color = _ctRed;
-	               /* Move x up the tree */
-	               x = x->pParent->pParent;
-	               }
-	           else {
-	               /* y is a _ctBlack node */
-	               if ( x == x->pParent->pLeft ) {
-	                   /* and x is to the right */ 
-	                   /* case 2 - move x up and rotate */
-	                   x = x->pParent;
-	                   RotateRight( pTree, x );
-	                   }
-	               /* case 3 */
-	               x->pParent->color = _ctBlack;
-	               x->pParent->pParent->color = _ctRed;
-	               RotateLeft( pTree, x->pParent->pParent );
-	               }
+    if(_Root(pTree)) {
+        while ( (x != _Root(pTree)) && (x->pParent->color == _ctRed) ) {
+            if ( x->pParent == x->pParent->pParent->pLeft ) {
+                /* If x's pParent is a left, y is x's right 'uncle' */
+                y = x->pParent->pParent->pRight;
+                if (y && y->color == _ctRed ) {
+                    /* case 1 - change the colors */
+                    x->pParent->color = _ctBlack;
+                    y->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    /* Move x up the tree */
+                    x = x->pParent->pParent;
+                }
+                else {
+                    /* y is a _ctBlack node */
+                    if ( x == x->pParent->pRight ) {
+                        /* and x is to the right */
+                        /* case 2 - move x up and rotate */
+                        x = x->pParent;
+                        RotateLeft( pTree, x );
+                    }
+                    /* case 3 */
+                    x->pParent->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    RotateRight( pTree, x->pParent->pParent );
+                }
+            }
+            else {
+                /* repeat the "if" part with right and left
+                   exchanged */
+                y = x->pParent->pParent->pLeft;
+                if (y && y->color == _ctRed ) {
+                    /* case 1 - change the colors */
+                    x->pParent->color = _ctBlack;
+                    y->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    /* Move x up the tree */
+                    x = x->pParent->pParent;
+                }
+                else {
+                    /* y is a _ctBlack node */
+                    if ( x == x->pParent->pLeft ) {
+                        /* and x is to the right */
+                        /* case 2 - move x up and rotate */
+                        x = x->pParent;
+                        RotateRight( pTree, x );
+                    }
+                    /* case 3 */
+                    x->pParent->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    RotateLeft( pTree, x->pParent->pParent );
+                }
 
-	           }
-	    }
-	}
+            }
+        }
+    }
 
     /* Colour the root _ctBlack */
     _Root(pTree)->color = _ctBlack;
