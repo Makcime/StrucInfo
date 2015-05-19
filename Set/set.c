@@ -15,55 +15,82 @@ typedef int bool;
 /* ------------------------------------------------------------------------- */
 struct TSet {
     struct TTree* pTree;
-    TComp _KeyCompare; /* because pTree->_KeyCempare not accessible */
+    TCompSet _KeyCompare; /* because pTree->_KeyCempare not accessible */
 };
 /* ------------------------------------------------------------------------- */
 /* Definition of function to get key                  */
-/* TODO ... */
+const void* GetChar(const TValueSet* pData) {
+	return *pData;
+}
+
 /* ------------------------------------------------------------------------- */
 /* Definitions of functions declared in set.h */
 /* ------------------------------------------------------------------------- */
-struct TSet* CreateSet(TComp __KeyCompare){
-	return;	
+struct TSet* CreateSet(TCompSet __KeyCompare){
+    struct TSet* set = (struct TSet*) malloc(sizeof(struct TSet));
+	set->pTree= CreateTree(GetChar, __KeyCompare);
+	set->_KeyCompare = __KeyCompare;
+	return set;	
 }
 /* ------------------------------------------------------------------------- */
 int IsEmptySet(struct TSet* pSet){
-	return;	
+	return IsEmptyTree(pSet->pTree);	
 }
 /* ------------------------------------------------------------------------- */
 int SizeOfSet(struct TSet* pSet){
-	return;	
+	return SizeOfTree(pSet->pTree);	
 }
 /* ------------------------------------------------------------------------- */
 TIteratorSet BeginOfSet(struct TSet* pSet){
-	return;	
+	return BeginOfTree(pSet->pTree);	
 }
 /* ------------------------------------------------------------------------- */
 TIteratorSet EndOfSet(struct TSet* pSet){
-	return;	
+	return EndOfTree(pSet->pTree);	
 }
 /* ------------------------------------------------------------------------- */
 TIteratorSet NextInSet(TIteratorSet iter){
-	return;	
+	return NextInTree(iter);	
+}
+/* ------------------------------------------------------------------------- */
+TIteratorSet PreviousInSet(TIteratorSet iter){
+	return PreviousInTree(iter);	
 }
 /* ------------------------------------------------------------------------- */
 TValueSet* GetPDataInSet(TIteratorSet iter){
-	return;	
+	return GetPDataInTree(iter);	
 }
 /* ------------------------------------------------------------------------- */
-int AddInSet(struct TSet* pSet, TValueSet* val){
-	return;	
+int AddInSet(struct TSet* pSet, const TValueSet* val){
+	if(!IsElementOfSet(pSet, val)){
+		InsertInTree(pSet->pTree, val);
+		return 1;	
+	}return 0;
 }
 /* ------------------------------------------------------------------------- */
-int RemoveFromSet(struct TSet* pSet, TValueSet* val){
-	return;	
+int RemoveFromSet(struct TSet* pSet, const TValueSet* val){
+	if(!IsElementOfSet(pSet, val)){
+		EraseInTree(pSet->pTree, LowerBoundInTree(pSet->pTree, val));
+		return 1;	
+	}return 0;
 }
 /* ------------------------------------------------------------------------- */
-int IsElementOfSet(struct TSet* pSet , TValueSet* val){
-	return;	
+bool IsElementOfSet(struct TSet* pSet , const TValueSet* val){
+
+	TIteratorTree LBIter = LowerBoundInTree(pSet->pTree, val);
+	// printf("%c\n", GetChar(val));getchar();
+
+	if (!pSet->_KeyCompare(GetChar(val), GetChar(GetPDataInTree(LBIter)))
+		&& !pSet->_KeyCompare(GetChar(GetPDataInTree(LBIter)), GetChar(val))){
+			// La data dans le lowerBound est egale à la data dans val
+			return true;
+		}
+	return false;
 }
 /* ------------------------------------------------------------------------- */
 void DestroySet(struct TSet* pSet){
+	DestroyTree(pSet->pTree);
+	free(pSet);
 	return;	
 }
 /* ------------------------------------------------------------------------- */

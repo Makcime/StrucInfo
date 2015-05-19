@@ -7,8 +7,9 @@
 
 #ifndef TFORSET_H_
 #define TFORSET_H_
+#include "../Tree/src/tfortree.h"
 /* ------------------------------------------------------------------------- */
 /* Type TValueSet must be defined by the programmer for use with TSet        */
-typedef char TValueSet;
+typedef TValueTree TValueSet;
 /* ------------------------------------------------------------------------- */
 #endif /* TFORSET_H_ */

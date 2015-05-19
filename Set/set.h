@@ -27,10 +27,11 @@ int SizeOfSet(struct TSet* pSet);
 TIteratorSet BeginOfSet(struct TSet* pSet);	
 TIteratorSet EndOfSet(struct TSet* pSet);
 TIteratorSet NextInSet(TIteratorSet iter);
+TIteratorSet PreviousInSet(TIteratorSet iter);
 TValueSet* GetPDataInSet(TIteratorSet iter);
-int AddInSet(struct TSet* pSet, TValueSet* val);
-int RemoveFromSet(struct TSet* pSet, TValueSet* val);
-int IsElementOfSet(struct TSet* pSet , TValueSet* val);
+int AddInSet(struct TSet* pSet,const TValueSet* val);
+int RemoveFromSet(struct TSet* pSet, const TValueSet* val);
+int IsElementOfSet(struct TSet* pSet, const TValueSet* val);
 void DestroySet(struct TSet* pSet);
 /* ------------------------------------------------------------------------- */
 #endif /* SET_H_ */
