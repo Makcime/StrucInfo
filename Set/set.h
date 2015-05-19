@@ -17,9 +17,7 @@ struct TSet;
 typedef TIteratorTree TIteratorSet;
 
 /* ------------------------------------------------------------------------- */
-// typedef TKeySet (*TKeyOf)(const TValueSet*);
 typedef int (*TCompSet)(TKeySet, TKeySet);
-typedef void (*FCallbackOnValue)(TValueSet*);
 /* ------------------------------------------------------------------------- */
 struct TSet* CreateSet(TComp __KeyCompare);
 int IsEmptySet(struct TSet* pSet);
@@ -27,7 +25,6 @@ int SizeOfSet(struct TSet* pSet);
 TIteratorSet BeginOfSet(struct TSet* pSet);	
 TIteratorSet EndOfSet(struct TSet* pSet);
 TIteratorSet NextInSet(TIteratorSet iter);
-TIteratorSet PreviousInSet(TIteratorSet iter);
 TValueSet* GetPDataInSet(TIteratorSet iter);
 int AddInSet(struct TSet* pSet,const TValueSet* val);
 int RemoveFromSet(struct TSet* pSet, const TValueSet* val);

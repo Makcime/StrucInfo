@@ -52,17 +52,14 @@ TIteratorSet EndOfSet(struct TSet* pSet){
 TIteratorSet NextInSet(TIteratorSet iter){
 	return NextInTree(iter);	
 }
-/* ------------------------------------------------------------------------- */
-TIteratorSet PreviousInSet(TIteratorSet iter){
-	return PreviousInTree(iter);	
-}
+
 /* ------------------------------------------------------------------------- */
 TValueSet* GetPDataInSet(TIteratorSet iter){
 	return GetPDataInTree(iter);	
 }
 /* ------------------------------------------------------------------------- */
 bool AddInSet(struct TSet* pSet, const TValueSet* val){
-	if(IsElementOfSet(pSet, val) == false){
+	if(!IsElementOfSet(pSet, val)){
 		InsertInTree(pSet->pTree, val);
 		return true;	
 	}
@@ -70,7 +67,7 @@ bool AddInSet(struct TSet* pSet, const TValueSet* val){
 }
 /* ------------------------------------------------------------------------- */
 bool RemoveFromSet(struct TSet* pSet, const TValueSet* val){
-	if(IsElementOfSet(pSet, val) == true){
+	if(IsElementOfSet(pSet, val)){
 		EraseInTree(pSet->pTree, LowerBoundInTree(pSet->pTree, GetChar(val)));
 		return true;	
 	}
@@ -80,12 +77,7 @@ bool RemoveFromSet(struct TSet* pSet, const TValueSet* val){
 bool IsElementOfSet(struct TSet* pSet , const TValueSet* val){
 
 	TIteratorTree LBIter = LowerBoundInTree(pSet->pTree, GetChar(val));
-
-
-	if(LBIter == EndOfTree(pSet->pTree)){
-		return false;
-	}
-
+	
 	if (pSet->_KeyCompare(GetChar(val), GetChar(GetPDataInTree(LBIter)))){
 		return false;
 	}
