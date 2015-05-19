@@ -31,12 +31,20 @@ int SizeOfTree(struct TTree* pTree);
 TIteratorTree NextInTree(TIteratorTree it);
 TIteratorTree PreviousInTree(TIteratorTree it);
 void InsertInTree(struct TTree* pTree, const TValueTree* data);
+TIteratorTree RegInsertInTree(struct TTree* pTree, const TValueTree* data);
 TIteratorTree EraseInTree(struct TTree* pTree, TIteratorTree it);
 void EraseKeysInTree(struct TTree* pTree, TKeyTree k);
 TIteratorTree UpperBoundInTree(struct TTree* pTree, TKeyTree k);
 TIteratorTree LowerBoundInTree(struct TTree* pTree, TKeyTree k);
 void WalkTree(struct TTree* pTree, FCallbackOnValue cb);
 void EraseSequenceInTree(struct TTree* pTree, TIteratorTree first, TIteratorTree last);
+
+/* Red Black trees Functions ----------------------------------------------- */
+void RotateLeft(struct TTree* pTree, TIteratorTree x);
+void RotateRight(struct TTree* pTree, TIteratorTree x);
+void RedBlackFixUp(struct TTree* pTree, TIteratorTree x);
+void RedBlackInsert( struct TTree* pTree, const TValueTree* data );
+
 
 /* ------------------------------------------------------------------------- */
 void __ShowPrefixTree(struct TTree* pTree, FCallbackOnValue fShowValue,

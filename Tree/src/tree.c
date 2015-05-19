@@ -175,8 +175,14 @@ TIteratorTree PreviousInTree(TIteratorTree it) {
 
 /* ------------------------------------------------------------------------- */
 void InsertInTree(struct TTree* pTree, const TValueTree* data) {
+    // RegInsertInTree(pTree, data);
+    RedBlackInsert(pTree, data);
 
-    _TPNode node = _CreateNode(data, NULL, NULL, NULL, _ctBlack, pTree->_pAllocator);
+}
+/* ------------------------------------------------------------------------- */
+TIteratorTree RegInsertInTree(struct TTree* pTree, const TValueTree* data) {
+
+    _TPNode node = _CreateNode(data, NULL, NULL, NULL, _ctRed, pTree->_pAllocator);
     TIteratorTree next, parent;
 
     int side = 0;
@@ -216,9 +222,12 @@ void InsertInTree(struct TTree* pTree, const TValueTree* data) {
         pTree->_header->pLeft = node;
         pTree->_header->pRight = node;
         node->pParent = pTree->_header;
+        node->color = 	_ctBlack;
         // node->pRight = pTree->_header;
     }
     pTree->_nodeCount++;
+
+    return node;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -526,10 +535,7 @@ static void _RecurInfix(_TPNode iter) {
         _fCallbackInfix(NULL);
 
     if(iter)
-        if(iter->pRight && iter->pRight->pRight != iter)
-            _RecurInfix(iter->pRight);
-        else if (_isCallOnLeave)
-            _RecurInfix(NULL);
+        _RecurInfix(iter->pRight);
 
     return;
 
@@ -540,17 +546,14 @@ static void __RecurPrefix(_TPNode iter) {
 
     if(iter)
         __fCallbackPrefix(&iter->value);
-    else
+    else if (_isCallOnLeave)
         __fCallbackPrefix(NULL);
 
     if(iter)
         __RecurPrefix(iter->pLeft);
 
     if(iter)
-        if(iter->pRight && iter->pRight->pRight != iter)
-            __RecurPrefix(iter->pRight);
-        else
-            __RecurPrefix(NULL);
+        __RecurPrefix(iter->pRight);
 
     return;
 }
@@ -562,14 +565,11 @@ static void __RecurPostfix(_TPNode iter) {
         __RecurPostfix(iter->pLeft);
 
     if(iter)
-        if(iter->pRight && iter->pRight->pRight != iter)
-            __RecurPostfix(iter->pRight);
-        else
-            __RecurPostfix(NULL);
+        __RecurPostfix(iter->pRight);
 
     if(iter)
         __fCallbackPostfix(&iter->value);
-    else
+    else if (_isCallOnLeave)
         __fCallbackPostfix(NULL);
     return;
 }
@@ -614,3 +614,153 @@ static _TPNode _Root(struct TTree* pTree) {
 }
 
 /* ------------------------------------------------------------------------- */
+/* Red Black trees Functions ----------------------------------------------- */
+/* ------------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------------- */
+
+// Definition of a red-black tree
+// A red-black tree is a binary search tree which has the following red-black properties:
+
+//     Every node is either red or black.
+//     Every leaf (NULL) is black.
+//     If a node is red, then both its children are black.
+//     Every simple path from a node to a descendant leaf contains the same number of black nodes.
+
+
+//     implies that on any path from the root to a leaf, red nodes must not be adjacent.
+
+//     However, any number of black nodes may appear in a sequence.
+
+/* ------------------------------------------------------------------------- */
+
+// make a right-leaning link lean to the left
+void RotateLeft(struct TTree* pTree, TIteratorTree x) {
+    TIteratorTree y;
+    y = x->pRight;
+    /* Turn y's left sub-tree into x's pRight sub-tree */
+    x->pRight = y->pLeft;
+    if ( y->pLeft != NULL )
+        y->pLeft->pParent = x;
+    /* y's new pParent was x's pParent */
+    y->pParent = x->pParent;
+    /* Set the pParent to point to y instead of x */
+    /* First see whether we're at the root */
+    if ( x->pParent->pParent == x ) {
+        x->pParent->pParent = y;
+    }
+    else {
+        if ( x == (x->pParent)->pLeft )
+            /* x was on the pLeft of its pParent */
+            x->pParent->pLeft = y;
+        else
+            /* x must have been on the pRight */
+            x->pParent->pRight = y;
+    }
+    /* Finally, put x on y's pLeft */
+    y->pLeft = x;
+    x->pParent = y;
+    return;
+}
+
+// make a Left-leaning link lean to the right
+void RotateRight(struct TTree* pTree, TIteratorTree x) {
+    TIteratorTree y;
+    y = x->pLeft;
+    /* Turn y's right sub-tree into x's pLeft sub-tree */
+    x->pLeft = y->pRight;
+    if ( y->pRight != NULL )
+        y->pRight->pParent = x;
+    /* y's new pParent was x's pParent */
+    y->pParent = x->pParent;
+    /* Set the pParent to point to y instead of x */
+    /* First see whether we're at the root */
+    if ( x->pParent->pParent == x ) {
+        x->pParent->pParent = y;
+    }
+    else {
+        if ( x == (x->pParent)->pRight )
+            /* x was on the pRight of its pParent */
+            x->pParent->pRight = y;
+        else
+            /* x must have been on the pLeft */
+            x->pParent->pLeft = y;
+    }
+    /* Finally, put x on y's pRight */
+    y->pRight = x;
+    x->pParent = y;
+    return;
+}
+
+void RedBlackFixUp(struct TTree* pTree, TIteratorTree it) {
+    return;
+}
+
+void RedBlackInsert( struct TTree* pTree, const TValueTree* data ) {
+    TIteratorTree x, y;
+    int debug = 0;
+    /* Insert in the tree in the usual way */
+    x = RegInsertInTree(pTree, data);
+
+    /* Now restore the red-black property */
+    if(_Root(pTree)) {
+        while ( (x != _Root(pTree)) && (x->pParent->color == _ctRed) ) {
+            if ( x->pParent == x->pParent->pParent->pLeft ) {
+                /* If x's pParent is a left, y is x's right 'uncle' */
+                y = x->pParent->pParent->pRight;
+                if (y && y->color == _ctRed ) {
+                    /* case 1 - change the colors */
+                    x->pParent->color = _ctBlack;
+                    y->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    /* Move x up the tree */
+                    x = x->pParent->pParent;
+                }
+                else {
+                    /* y is a _ctBlack node */
+                    if ( x == x->pParent->pRight ) {
+                        /* and x is to the right */
+                        /* case 2 - move x up and rotate */
+                        x = x->pParent;
+                        RotateLeft( pTree, x );
+                    }
+                    /* case 3 */
+                    x->pParent->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    RotateRight( pTree, x->pParent->pParent );
+                }
+            }
+            else {
+                /* repeat the "if" part with right and left
+                   exchanged */
+                y = x->pParent->pParent->pLeft;
+                if (y && y->color == _ctRed ) {
+                    /* case 1 - change the colors */
+                    x->pParent->color = _ctBlack;
+                    y->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    /* Move x up the tree */
+                    x = x->pParent->pParent;
+                }
+                else {
+                    /* y is a _ctBlack node */
+                    if ( x == x->pParent->pLeft ) {
+                        /* and x is to the right */
+                        /* case 2 - move x up and rotate */
+                        x = x->pParent;
+                        RotateRight( pTree, x );
+                    }
+                    /* case 3 */
+                    x->pParent->color = _ctBlack;
+                    x->pParent->pParent->color = _ctRed;
+                    RotateLeft( pTree, x->pParent->pParent );
+                }
+
+            }
+        }
+    }
+
+    /* Colour the root _ctBlack */
+    _Root(pTree)->color = _ctBlack;
+}
+

@@ -184,6 +184,21 @@ int main(void) {
 	struct TTree* pTree = CreateTree(GetPtr, LessPtr);
 	puts("struct TTree* pTree = CreateTree(GetPtr, LessPtr) ...");
 	ShowTree(pTree);
+	InsertInOrder(pTree, 13);
+	puts("InsertInOrder(pTree, 13) ...");
+	ShowTree(pTree);
+	__ShowLevelTree(pTree, ShowPairPtrSize, 7);
+	__ShowInfixTree(pTree, ShowKey, true);
+	getchar();
+	EraseNodesFromBegin(pTree);
+	InsertInReverseOrder(pTree, 13);
+	puts("InsertInReverseOrder(pTree, 13) ...");
+	ShowTree(pTree);
+	__ShowLevelTree(pTree, ShowPairPtrSize, 7);
+	__ShowInfixTree(pTree, ShowKey, true);
+	getchar();
+	
+
 	InsertInRandomOrder(pTree, 20);
 	puts("InsertInRandomOrder(pTree, 20) ...");
 	ShowTree(pTree);
