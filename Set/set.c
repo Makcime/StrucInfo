@@ -77,16 +77,9 @@ bool RemoveFromSet(struct TSet* pSet, const TValueSet* val){
 bool IsElementOfSet(struct TSet* pSet , const TValueSet* val){
 
 	TIteratorTree LBIter = LowerBoundInTree(pSet->pTree, GetChar(val));
-	
-	if (pSet->_KeyCompare(GetChar(val), GetChar(GetPDataInTree(LBIter)))){
-		return false;
-	}
-	else if(pSet->_KeyCompare(GetChar(GetPDataInTree(LBIter)), GetChar(val))){
-		return false;
-	} // La data dans le lowerBound est egale à la data dans val
-	else{
-		return true;
-	}	
+
+	return (!pSet->_KeyCompare(GetChar(val), GetChar(GetPDataInTree(LBIter)))
+		&& !pSet->_KeyCompare(GetChar(GetPDataInTree(LBIter)), GetChar(val)));
 
 }
 /* ------------------------------------------------------------------------- */
