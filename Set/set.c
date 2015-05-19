@@ -19,7 +19,7 @@ struct TSet {
 };
 /* ------------------------------------------------------------------------- */
 /* Definition of function to get key                  */
-const void* GetChar(const TValueSet* pData) {
+const char GetChar(const TValueSet* pData) {
     return *pData;
 }
 
@@ -57,6 +57,7 @@ TIteratorSet NextInSet(TIteratorSet iter) {
 TValueSet* GetPDataInSet(TIteratorSet iter) {
     return GetPDataInTree(iter);
 }
+
 /* ------------------------------------------------------------------------- */
 bool AddInSet(struct TSet* pSet, const TValueSet* val) {
     if(!IsElementOfSet(pSet, val)) {
