@@ -71,7 +71,7 @@ bool AddInSet(struct TSet* pSet, const TValueSet* val){
 /* ------------------------------------------------------------------------- */
 bool RemoveFromSet(struct TSet* pSet, const TValueSet* val){
 	if(IsElementOfSet(pSet, val) == true){
-		EraseInTree(pSet->pTree, LowerBoundInTree(pSet->pTree, val));
+		EraseInTree(pSet->pTree, LowerBoundInTree(pSet->pTree, GetChar(val)));
 		return true;	
 	}
 	return false;
