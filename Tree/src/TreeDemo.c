@@ -184,6 +184,11 @@ int main(void) {
 	struct TTree* pTree = CreateTree(GetPtr, LessPtr);
 	puts("struct TTree* pTree = CreateTree(GetPtr, LessPtr) ...");
 	ShowTree(pTree);
+	InsertInOrder(pTree, 5);
+	puts("InsertInOrder(pTree, 80) ...");
+	ShowTree(pTree);
+	__ShowLevelTree(pTree, ShowPairPtrSize, 7);
+	getchar();
 	InsertInRandomOrder(pTree, 20);
 	puts("InsertInRandomOrder(pTree, 20) ...");
 	ShowTree(pTree);
