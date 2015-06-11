@@ -8,6 +8,7 @@ IO = InOut/src/inout
 LIST = List/src/list
 TREE = Tree/src/tree
 ALLOC = Tree/src/allocator
+SET = Set/set
 
 # Exo
 A = ErathosteneStatic/ErathosteneStatic
@@ -17,7 +18,9 @@ D = Samia/EraDyna3
 G = ErathosteneDynaDecompPremEval/ErathosteneDynaDecompPremEval
 E = List/src/ListDemo
 H = /home/max/Documents/StrucInfo/ListEval/ListEvalDemo
-I = Tree/src/TreeDemo
+# I = Tree/src/TreeDemo
+J = Set/SetDemo
+
 
 TARGET_BIN = $(A).x
 TARGET_BIN += $(B).x
@@ -26,7 +29,8 @@ TARGET_BIN += $(D).x
 TARGET_BIN += $(E).x
 TARGET_BIN += $(G).x
 TARGET_BIN += $(H).x
-TARGET_BIN += $(I).x
+# TARGET_BIN += $(I).x
+TARGET_BIN += $(J).x
 
 TARGET_OBJ = $(A).o
 TARGET_OBJ += $(B).o
@@ -34,16 +38,30 @@ TARGET_OBJ += $(C).o
 TARGET_OBJ += $(D).o
 TARGET_OBJ += $(E).o
 TARGET_OBJ += $(G).o
-TARGET_OBJ += $(LIST).o
 TARGET_OBJ += $(IO).o
 TARGET_OBJ += $(H).o
-TARGET_OBJ += $(I).o
+# TARGET_OBJ += $(I).o
+TARGET_OBJ += $(J).o
+
+TARGET_OBJ += $(LIST).o
 TARGET_OBJ += $(TREE).o
 TARGET_OBJ += $(ALLOC).o
+TARGET_OBJ += $(SET).o
 
 all: $(TARGET_BIN)
 
 
+
+#SetDemo
+$(J).x: $(J).o $(TREE).o $(ALLOC).o $(SET).o
+	$(CC) -o $(J).x $(J).o $(TREE).o $(ALLOC).o $(SET).o $(LDFLAGS)
+
+$(J).o: $(J).c 
+	$(CC) -o $(J).o -c $(J).c $(CFLAGS_99)
+
+#Set
+$(SET).o: $(SET).c 
+	$(CC) -o $(SET).o -c $(SET).c $(CFLAGS)
 
 #TreeDemo
 $(I).x: $(I).o $(TREE).o $(ALLOC).o
@@ -56,9 +74,6 @@ $(I).o: $(I).c
 $(ALLOC).o: $(ALLOC).c 
 	$(CC) -o $(ALLOC).o -c $(ALLOC).c $(CFLAGS)
 
-#Tree
-# $(TREE).o: $(TREE).c $(ALLOC).c
-# 	$(CC) -o $(TREE).o -c $(TREE).c $(ALLOC).c $(CFLAGS)
 
 #Tree
 $(TREE).o: $(TREE).c 
