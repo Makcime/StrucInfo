@@ -1,0 +1,32 @@
+﻿
+Votre naturel maximum ? 100
+
+Il y a 25 nombre premiers inferieurs a 100.
+
+Nombre premier n      1 :          2
+Nombre premier n      2 :          3
+Nombre premier n      3 :          5
+Nombre premier n      4 :          7
+Nombre premier n      5 :         11
+Nombre premier n      6 :         13
+Nombre premier n      7 :         17
+Nombre premier n      8 :         19
+Nombre premier n      9 :         23
+Nombre premier n     10 :         29
+Nombre premier n     11 :         31
+Nombre premier n     12 :         37
+Nombre premier n     13 :         41
+Nombre premier n     14 :         43
+Nombre premier n     15 :         47
+Nombre premier n     16 :         53
+Nombre premier n     17 :         59
+Nombre premier n     18 :         61
+Nombre premier n     19 :         67
+Nombre premier n     20 :         71
+Nombre premier n     21 :         73
+Nombre premier n     22 :         79
+Nombre premier n     23 :         83
+Nombre premier n     24 :         89
+Nombre premier n     25 :         97
+
+Voulez-vous arreter (<O>ui/<N>on) ?
