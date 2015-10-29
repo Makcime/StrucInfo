@@ -11,20 +11,34 @@ HELLO = hello/hello
 
 PASCAL = pascal/pascal
 ERA = ErathosteneDyna/ErathosteneDyna
+GRAPH = GraphePrj/graph
+GRAPHPRJ = GraphePrj/GraphTest
 
 
 TARGET_BIN = $(HELLO).x
 TARGET_BIN += $(PASCAL).x
 TARGET_BIN += $(ERA).x
+TARGET_BIN += $(GRAPHPRJ).x
 
 TARGET_OBJ = $(HELLO).o
 TARGET_OBJ += $(PASCAL).o
 TARGET_OBJ += $(ERA).o
+TARGET_OBJ += $(GRAPH).o
+TARGET_OBJ += $(GRAPHPRJ).o
 
 TARGET_OBJ += $(IO).o
 
 all: $(TARGET_BIN)
 
+#GraphPRJ
+$(GRAPHPRJ).x: $(GRAPHPRJ).o $(GRAPH).o 
+	$(CC) -o $(GRAPHPRJ).x $(GRAPHPRJ).o $(GRAPH).o $(LDFLAGS)
+
+$(GRAPHPRJ).o: $(GRAPHPRJ).cpp 
+	$(CC) -o $(GRAPHPRJ).o -c $(GRAPHPRJ).cpp $(CFLAGS)
+
+$(GRAPH).o: $(GRAPH).cpp
+	$(CC) -o $(GRAPH).o -c $(GRAPH).cpp $(CFLAGS)
 
 #hELLO
 $(HELLO).x: $(HELLO).o 
