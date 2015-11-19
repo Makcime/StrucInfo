@@ -5,24 +5,28 @@ const double INFINITY = 10e100;
 //---------------------------------------------------------------------------
 class TGraph;
 //---------------------------------------------------------------------------
-class TDest { // ensembel des somments qu'on peu atteindre depuis un somment, rangée dans la matrice associée au graph
+class TDest { // ensembel des somments qu'on peu atteindre depuis un sommet, rangée dans la matrice associée au graph
 	//TODO
 public:
 	TDest();
 	~TDest();
-	int& operator[](int _i);
-	const int& operator[](int _i) const;
+	double& operator[](int _i);
+	const double& operator[](int _i) const;
+
+private:
+	double* pValues;
+	friend class TGraph;
 };
 //---------------------------------------------------------------------------
 class TGraph {
 public:
 	// TODO
-	TGraph();
 	TGraph(int dim);
 	~TGraph();
 	int Dim() const;
 	TDest& operator[](int i); // nous renvoie une ref vers un "Dest" qu on peut modifier
 	const TDest& operator[](int i) const; // nous renvoie une ref vers un "Dest" qu on peut modifier
+    TGraph& operator=(const TGraph& g);
 
 private:
 	int dim;
@@ -40,7 +44,7 @@ public:
 	void Erase();
 	bool Add(int _s);
 	bool Remove();
-	int Last() const;
+	int Last() 	const;
 	int& operator[](int _i);
 	const int& operator[](int _i) const;
 private:

@@ -1,5 +1,5 @@
-# include <iostream>
-# include <iomanip>
+#include <iostream>
+#include <iomanip>
 #include "graph.h"
 //---------------------------------------------------------------------------
 using namespace std;
@@ -10,12 +10,14 @@ void ShowPath(const TGraph& graph, const TPath& path, double length);
 bool FindNewPath(void);
 //---------------------------------------------------------------------------
 int main(int argc, char* argv[]) {
+	//*
 	TGraph* pGraph = CreateGraph();
 	TPath path(pGraph->Dim());
 	int start, end;
 	double length;
 	cout << endl;
 	ShowGraph(*pGraph);
+	
 	do {
 		cout << endl << "Sommet de départ et d'arrivée: ";
 		cin >> start >> end;
@@ -23,6 +25,8 @@ int main(int argc, char* argv[]) {
 		ShowPath(*pGraph, path, length);
 	} while (FindNewPath());
 	delete pGraph;
+	//*/
+
 	return 0;
 }
 //---------------------------------------------------------------------------
@@ -77,7 +81,8 @@ void ShowPath(const TGraph& graph, const TPath& path, double length) {
 		cout << "Aucun chemin n'a été trouvé!" << endl;
 	else {
 		cout << "Un chemin de longueur " << length << " a été trouvé: ";
-		int s = 0;
+
+			int s = 0;
 		double len = 0.0;
 		for (int i = 0, sPrec = path[0]; i < path.Length(); ++i) {
 			s = path[i];

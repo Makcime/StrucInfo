@@ -1,10 +1,21 @@
 //---------------------------------------------------------------------------
 #include "graph.h"
+#include <iostream>
+#include <iomanip>
+
 //---------------------------------------------------------------------------
 class TWork {
 private:
 	// TODO
+	const TGraph& graph;
+	const int begin;
+	const int end;
+	TPath tmpPath;
+	TPath& bestPath;
 	double bestLength;
+	double& length;
+	bool* visitedNodes;
+
 	TWork(const TGraph& _graph, int& _begin, int& _end, TPath& _path, double& _length);
 	~TWork();
 	void DoWork();
@@ -12,111 +23,176 @@ private:
 			TPath& _path, double& _length);
 };
 //---------------------------------------------------------------------------
-// TODO definitions for TDest
-TDest::TDest(){
+// TODO definitions for TWork
+TWork::TWork(const TGraph& _graph, int& _begin, int& _end, TPath& _path, double& _length):
+	begin(_begin), graph(_graph), end(_end), bestPath(_path), length(_length), tmpPath(_path.LengthMax()){
 
+	bestLength = INFINITY;
+	tmpPath.Add(begin);
+	visitedNodes = new bool [graph.Dim()];
+	for (int i = 0; i < graph.Dim(); ++i)
+		visitedNodes[i] = false;
+	visitedNodes[begin] = true;
+
+}
+
+TWork::~TWork(){
+}
+
+void TWork::DoWork(){
+	if (tmpPath.Last() == end){
+		length = 0;
+		for (int i = 0; i < tmpPath.Length() -1; ++i)
+			length += graph[tmpPath[i]][tmpPath[i + 1]];
+		if(length < bestLength){
+			bestLength = length;
+			bestPath = tmpPath;
+		}
+	}else {
+		for (int i = 0; i < graph.Dim(); ++i){
+			if((!visitedNodes[i]) && (graph[tmpPath.Last()][i] < INFINITY ) 
+				&& graph[tmpPath.Last()][i] > 0){
+				tmpPath.Add(i);
+				visitedNodes[i] = true;
+				DoWork();
+				tmpPath.Remove();
+				visitedNodes[i] = false;
+			}
+		}
+	}
+}
+//---------------------------------------------------------------------------
+// TODO definitions for TDest
+TDest::TDest():
+	pValues(0){
 }
 
 TDest::~TDest(){
-
+	delete[] pValues;
 }
 
-int& TDest::operator[](int _i){
-
+double& TDest::operator[](int i){
+	return pValues[i];
 }
 
-const int& TDest::operator[](int _i) const{
-
+const double& TDest::operator[](int i) const{
+	return pValues[i];
 }
 
 //---------------------------------------------------------------------------
 // TODO definitions for TGraph
-TGraph::TGraph(){
+TGraph::TGraph(int dim) :
+	dim(dim){
+	ppDest = new TDest[dim];
 
-}
-
-TGraph::TGraph(int dim){
-
+	for (int i = 0; i < dim; ++i){
+		ppDest[i].pValues = new double[dim];
+		for (int j = 0; j < dim; ++j)
+			ppDest[i].pValues[j] = (i!=j) ? INFINITY : 0;
+	}
 }
 
 TGraph::~TGraph(){
-
+	delete[] ppDest;
 }
 
 int TGraph::Dim() const{
-
+	return dim;
 }
 
 TDest& TGraph::operator[](int i){
-
+	return ppDest[i];
 }
 
 const TDest& TGraph::operator[](int i) const{
+	return ppDest[i];
+}
 
+TGraph& TGraph::operator=(const TGraph& g){    
+    if (this != &g){
+        for (int i = 0; i < dim; ++i)
+          for (int j = 0; j < dim; ++j)
+            ppDest[i].pValues[j] = g.ppDest[i].pValues[j];
+    }
+		
+	return *this;
 }
 
 //---------------------------------------------------------------------------
 // TODO definitions for TPath
-TPath::TPath(int _lengthMax){
-
+TPath::TPath(int _lengthMax):
+length(0), lengthMax(_lengthMax){
+	pNodes = new int[lengthMax];
 }
 
-TPath::TPath(const TPath& _path){ // constructeur de copie{
+TPath::TPath(const TPath& _path){ // constructeur de copie?
+	lengthMax = _path.lengthMax;
+	length = _path.length;
+	pNodes = new int[lengthMax];
 
+	for(int i = 0; i <lengthMax; i++)
+		pNodes [i] = _path[i];
 }
 
 TPath::~TPath(){
-
+	delete[] pNodes;
 }
 
-TPath& TPath::TPath::operator=(const TPath& _path){
-
+TPath& TPath::operator=(const TPath& _path){
+    
+    if( (this != &_path) ){
+	    (*this).length = _path.length;
+	    (*this).lengthMax = _path.lengthMax;
+        if(_path.lengthMax != (*this).lengthMax){
+            delete [] pNodes;
+            pNodes = new int[_path.lengthMax];            
+        }    
+        for(int i=0; i<_path.length; i++)
+            pNodes[i] = _path[i];
+    }
+	return *this;
 }
 
 int TPath::LengthMax() const{
-
+	return this->lengthMax;
 }
 
 int TPath::Length() const{
-
+	return this->length;
 }
 
 void TPath::Erase(){
-
+	length = 0;
 }
 
 bool TPath::Add(int _s){
+	if(length == lengthMax)
+		return false;
 
+	pNodes[length++] = _s;
+	return true;
 }
 
 bool TPath::Remove(){
-
+	if (length > 0){
+		length--;
+		return true;
+	}
+	return false;
 }
 
 int TPath::Last() const{
-
+	return pNodes[length-1];
 }
 
 int& TPath::operator[](int _i){
-
+	return this->pNodes[_i];
 }
 
 const int& TPath::operator[](int _i) const{
-
+	return this->pNodes[_i];
 }
 
-//---------------------------------------------------------------------------
-// TODO definitions for TWork
-TWork::TWork(const TGraph& _graph, int& _begin, int& _end, TPath& _path, double& _length){
-	bestLength = _length;
-}
-TWork::~TWork(){
-
-}
-
-void TWork::DoWork(){
-
-}
 //---------------------------------------------------------------------------
 bool ComputeShortestPath(const TGraph& _graph, int _begin, int _end, TPath& _path,
                          double& _length) {
