@@ -1,0 +1,300 @@
+Liste1 (2   el.)
+tintin(p1)      milou   END(p2)
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 2
+
+                    Definition de la position p2 dans liste1
+                    ----------------------------------------
+Nom ? milou
+                                     Listes
+                                     ------
+Liste1 (2   el.)
+tintin(p1)      milou(p2)       END
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 3
+
+              Insertion d'un nom devant la position p2 dans liste1
+              ----------------------------------------------------
+Nom ? dupont
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+tintin(p1)      dupont  milou(p2)       END
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 4
+
+                 Inversion des elements de p1 et p2 dans liste1
+                 ----------------------------------------------
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+dupont(p1)      tintin  milou(p2)       END
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 5
+
+             Suppression de l'element a la position p1 dans liste1
+             -----------------------------------------------------
+                                     Listes
+                                     ------
+Liste1 (2   el.)
+tintin(p1)      milou(p2)       END
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 3
+
+              Insertion d'un nom devant la position p2 dans liste1
+              ----------------------------------------------------
+Nom ? dupont
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+tintin(p1)      dupont  milou(p2)       END
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 2
+
+                    Definition de la position p2 dans liste1
+                    ----------------------------------------
+Nom ? truc
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+tintin(p1)      dupont  milou   END(p2)
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 7
+
+              Tri alphabetique des elements de p1 a p2 dans liste1
+              ----------------------------------------------------
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+dupont(p1)      milou   tintin  END(p2)
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 4
+
+                 Inversion des elements de p1 et p2 dans liste1
+                 ----------------------------------------------
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+tintin(p1)      milou   dupont  END(p2)
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? 8
+
+          Tri par longueur de nom des elements de p1 a p2 dans liste1
+          -----------------------------------------------------------
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+milou(p1)       tintin  dupont  END(p2)
+Liste2 INDEFINIE
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? a
+
+                      Creation de liste2, copie de liste1
+                      -----------------------------------
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+milou(p1)       tintin  dupont  END(p2)
+Liste2 (3   el.)
+milou   tintin  dupont  END(p3)
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? c
+
+                    Definition de la position p3 dans liste2
+                    ----------------------------------------
+Nom ? dupont
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+milou(p1)       tintin  dupont  END(p2)
+Liste2 (3   el.)
+milou   tintin  dupont(p3)      END
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? d
+
+            Insertion des elements de p1 a p2 devant p3 dans liste2
+            -------------------------------------------------------
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+milou(p1)       tintin  dupont  END(p2)
+Liste2 (6   el.)
+milou   tintin  milou   tintin  dupont  dupont(p3)      END
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ? f
+
+     Insertion des noms de longueur donnee de liste1 devant p3 dans liste2
+     ---------------------------------------------------------------------
+Longueur ? 6
+
+                                     Listes
+                                     ------
+Liste1 (3   el.)
+milou(p1)       tintin  dupont  END(p2)
+Liste2 (8   el.)
+milou   tintin  milou   tintin  dupont  tintin  dupont  dupont(p3)      END
+                                      MENU
+                                      ====
+
+  <1> Determiner p1                       <2> Determiner p2
+  <3> Inserer devant p2                   <4> Inverser p1 -> p2
+  <5> Supprimer p1                        <6> Supprimer p1 -> p2
+  <7> Trier ordre alphabetique p1 -> p2   <8> Trier longueurs nom p1 -> p2
+
+  <A> Creer copie liste1                  <B> Detruire liste2
+  <C> Determiner p3                       <D> Inserer p1 -> p2 devant p3
+  <E> Affecter liste1 a liste2            <F> Inserer noms longueur donnee
+
+  <0> Arreter                             Votre Choix ?
