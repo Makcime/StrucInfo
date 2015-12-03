@@ -207,5 +207,71 @@ bool ComputeShortestPath(const TGraph& _graph, int _begin, int _end, TPath& _pat
 	else
 		return false;
 }
+
+bool DijkstraShortestPath(const TGraph& _graph, int _start, int _end, TPath& _path,
+	double& _length){
+
+	bool* visitedNodes = new bool [_graph.Dim()];
+
+	// pour chaque noeud, stocker la distance minimum pour l'atteindre (default = INFINITY)
+	double*lengths	= new double [_graph.Dim()];
+
+	// de quel noeud a t il été atteint par la pllus petite distance? (default = -1)
+	int* froms	= new int [_graph.Dim()];
+
+	for (int i = 0; i < _graph.Dim(); ++i){
+		visitedNodes[i] = false;
+		lengths[i] = INFINITY;
+		froms[i] = -1;
+	}
+
+	//demarrer du start
+	int currentNode = _start;
+	int nextNode = _start;
+	lengths[currentNode] = 0;
+	
+	while (!visitedNodes[_end]){
+	// while (nextNode != _end){
+
+		currentNode = nextNode;
+		visitedNodes[currentNode] = true;
+
+		int bestLength = INFINITY;
+
+		// toucher tous les noeuds non visités dupuis le noeuds courant 
+		for (int i = 0; i < _graph.Dim(); ++i)
+			if (i != currentNode && !visitedNodes[i])
+				if((_graph[currentNode][i] + lengths[currentNode]) < lengths[i]){
+					froms[i] = currentNode;
+					lengths[i] = _graph[currentNode][i] + lengths[currentNode];
+				}
+
+		// trouver le prochain noeuds 
+		for (int i = 0; i < _graph.Dim(); ++i)
+			if(!visitedNodes[i] && bestLength > lengths[i]){
+				nextNode = i;
+				bestLength = _graph[currentNode][i];
+		}
+
+		if (nextNode == currentNode) // break loop if no next node possible
+			break;
+	}
+
+	_path.Erase();
+	int i = _end;
+	_length = lengths[i];
+	TPath p(_graph.Dim());
+	p.Add(i);
+
+	if (_length < INFINITY){
+		while(i != _start){
+			i = froms[i];
+			p.Add(i);
+		}
+		for (int j = p.Length(); j > 0; j--)
+			_path.Add(p[j-1]);
+	}
+
+}
 //---------------------------------------------------------------------------
 

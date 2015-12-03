@@ -55,5 +55,9 @@ private:
 //---------------------------------------------------------------------------
 bool ComputeShortestPath(const TGraph& _graph, int _start, int _end, TPath& _path,
 		double& _length);
+
+bool DijkstraShortestPath(const TGraph& _graph, int _start, int _end, TPath& _path,
+	double& _length);
+
 //---------------------------------------------------------------------------
 #endif /*GRAPH_H_*/

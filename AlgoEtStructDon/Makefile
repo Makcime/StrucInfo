@@ -14,7 +14,7 @@ ERA = ErathosteneDyna/ErathosteneDyna
 GRAPH = GraphePrj/graph
 GRAPHFORTEST = GrapheTest/graph
 GRAPHPRJ = GraphePrj/GraphTest
-GRAPHTEST = GrapheTest/GraphTest
+GRAPHTEST = GrapheTest/GraphDijkstraTest
 
 
 TARGET_BIN = $(HELLO).x
@@ -44,12 +44,11 @@ $(GRAPHPRJ).o: $(GRAPHPRJ).cpp
 $(GRAPH).o: $(GRAPH).cpp
 	$(CC) -o $(GRAPH).o -c $(GRAPH).cpp $(CFLAGS)
 
-
 #GraphTest
-$(GRAPHTEST).x: $(GRAPHTEST).o $(GRAPH).o 
-	$(CC) -o $(GRAPHTEST).x $(GRAPHTEST).o $(GRAPH).o $(LDFLAGS)
+$(GRAPHTEST).x: $(GRAPHTEST).o $(GRAPHFORTEST).o
+	$(CC) -o $(GRAPHTEST).x $(GRAPHTEST).o $(GRAPHFORTEST).o $(LDFLAGS)
 
-$(GRAPHTEST).o: $(GRAPHTEST).cpp 
+$(GRAPHTEST).o: $(GRAPHTEST).cpp
 	$(CC) -o $(GRAPHTEST).o -c $(GRAPHTEST).cpp $(CFLAGS)
 
 $(GRAPHFORTEST).o: $(GRAPHFORTEST).cpp
@@ -79,7 +78,6 @@ $(ERA).o: $(ERA).cpp
 #InOut
 $(IO).o: $(IO).cpp
 	$(CC) -o $(IO).o -c $(IO).cpp $(CFLAGS)
-
 
 clean:
 	rm -rf $(TARGET_BIN)
